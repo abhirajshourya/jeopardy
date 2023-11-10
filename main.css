@@ -34,7 +34,8 @@
 }
 
 .welcomePage__button {
-  width: 25%;
+  min-width: 175px;
+  width: 10%;
   height: 50px;
   cursor: pointer;
   font-size: 20px;
@@ -77,6 +78,10 @@
 .table__headers {
 }
 .table__head {
+  background-color: #000;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
 }
 
 th,

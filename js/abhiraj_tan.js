@@ -85,7 +85,7 @@ class JeopardyGame {
       tableHead.setAttribute('id', `tableHead-${i}`);
       tableHead.setAttribute('class', 'table__head');
       // tableHead.innerHTML = `${this.categories[i - 1].title}`;
-      tableHead.innerHTML = `Category ${i}`;
+      tableHead.innerHTML = `Category ${Math.ceil(Math.random() * Math.random() * 100)}`;
       tableHeaders.appendChild(tableHead);
     }
     table.appendChild(tableHeaders);
@@ -146,7 +146,7 @@ class JeopardyGame {
     resetBtn.addEventListener('click', () => {
       if (confirm('Are you sure to reset this game?')) {
         document.body.innerHTML = '';
-        createBoard();
+        this.welcomePage();
       }
     });
     controlBoard.appendChild(resetBtn);
