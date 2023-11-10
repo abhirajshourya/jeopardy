@@ -58,9 +58,9 @@ class JeopardyGame {
     loadingPage.appendChild(loading);
 
     //load categories
-    // this.categories = await fetch(`https://jservice.io/api/categories?count=6&offset=10`).then(
-    //   (response) => response.json()
-    // );
+    this.categories = await fetch(`https://jservice.io/api/categories?count=6&offset=10`).then(
+      (response) => response.json()
+    );
 
     let board = document.createElement('div');
     board.setAttribute('id', 'board');
@@ -84,8 +84,7 @@ class JeopardyGame {
       let tableHead = document.createElement('th');
       tableHead.setAttribute('id', `tableHead-${i}`);
       tableHead.setAttribute('class', 'table__head');
-      // tableHead.innerHTML = `${this.categories[i - 1].title}`;
-      tableHead.innerHTML = `Category ${Math.ceil(Math.random() * Math.random() * 100)}`;
+      tableHead.innerHTML = `${this.categories[i - 1].title}`;
       tableHeaders.appendChild(tableHead);
     }
     table.appendChild(tableHeaders);
@@ -100,32 +99,26 @@ class JeopardyGame {
       tableRow.setAttribute('class', 'table__row');
       for (let j = 1; j <= 6; j++) {
         //load clue
-        // let clue = await fetch(
-        //   `https://jservice.io/api/clues?category=${this.categories[j - 1].id}&value=${
-        //     this.values[i - 1]
-        //   }`
-        // ).then((response) => response.json());
+        let clue = await fetch(
+          `https://jservice.io/api/clues?category=${this.categories[j - 1].id}&value=${
+            this.values[i - 1]
+          }`
+        ).then((response) => response.json());
 
-        // let question = new JeopardyQuestion(
-        //   clue[0].question,
-        //   clue[0].answer,
-        //   clue[0].value,
-        //   this.categories[j - 1].title
-        // );
+        let question = new JeopardyQuestion(
+          clue[0].question,
+          clue[0].answer,
+          clue[0].value,
+          this.categories[j - 1].title
+        );
 
-        // this.questions.push(question);
+        this.questions.push(question);
 
         let cell = document.createElement('td');
         cell.setAttribute('id', `tableData-${i}-${j}`);
         cell.setAttribute('class', 'table__data');
-        cell.innerHTML = `${this.values[i - 1]}`;
+        cell.innerHTML = `$${this.values[i - 1]}`;
         cell.addEventListener('click', () => {
-          let question = new JeopardyQuestion(
-            `Question ${i} ${j}`,
-            `Answer ${i} ${j}`,
-            this.values[i - 1],
-            `Category ${j}`
-          );
           let modal = question.createQuestionModal(cell);
           board.appendChild(modal);
         });
