@@ -110,15 +110,15 @@ class JeopardyGame {
 
         this.questions.push(question);
 
-        let tableData = document.createElement('td');
-        tableData.setAttribute('id', `tableData-${i}-${j}`);
-        tableData.setAttribute('class', 'table__data');
-        tableData.innerHTML = `${clue[0].value}`;
-        tableData.addEventListener('click', () => {
-          let modal = question.createQuestionModal();
+        let cell = document.createElement('td');
+        cell.setAttribute('id', `tableData-${i}-${j}`);
+        cell.setAttribute('class', 'table__data');
+        cell.innerHTML = `${clue[0].value}`;
+        cell.addEventListener('click', () => {
+          let modal = question.createQuestionModal(cell);
           board.appendChild(modal);
         });
-        tableRow.appendChild(tableData);
+        tableRow.appendChild(cell);
       }
       table.appendChild(tableRow);
     }
@@ -148,26 +148,6 @@ class JeopardyGame {
     //remove loading
     document.body.removeChild(loading);
   }
-
-  async loadQuestions() {
-    this.categories.forEach((category) => {
-      this.values.forEach((value) => {
-        let questionURL = `https://jservice.io/api/clues?category=${category.id}&value=${value}`;
-        fetch(questionURL)
-          .then((response) => response.json())
-          .then((question) => {
-            this.questions.push(
-              new JeopardyQuestion(
-                question[0].question,
-                question[0].answer,
-                question[0].value,
-                category.title
-              )
-            );
-          });
-      });
-    });
-  }
 }
 
 class JeopardyQuestion {
@@ -188,7 +168,7 @@ class JeopardyQuestion {
   /**
    * Function to create the Question Modal.
    */
-  createQuestionModal() {
+  createQuestionModal(cell) {
     let modal = document.createElement('div');
     modal.setAttribute('id', 'modal');
     modal.setAttribute('class', 'modal');
@@ -222,8 +202,8 @@ class JeopardyQuestion {
     answerBtn.innerHTML = 'Show Answer';
     answerBtn.addEventListener('click', () => {
       answer.style.visibility = 'visible';
-      tableData.style.color = '#ddd';
-      tableData.style.textDecoration = 'line-through';
+      this.isAnswered = true;
+      cell.classList.add('answered__question');
     });
 
     let cancelBtn = document.createElement('button');

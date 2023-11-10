@@ -18,7 +18,7 @@
 .welcomePage__img {
   margin: 80px;
   display: block;
-  height: 20%;
+  height: 40%;
 }
 
 .welcomePage__button {
@@ -27,6 +27,15 @@
   cursor: pointer;
   font-size: 20px;
   border-radius: 12px;
+  background-color: #fff;
+  border: 2px solid blue;
+  color: blue;
+}
+
+.welcomePage__button:hover {
+  border: 2px solid #143479;
+  background-color: #2865ea;
+  color: #fff;
 }
 
 /**
@@ -171,6 +180,13 @@ td:hover {
   border: 1px solid red;
   border-radius: 4px;
   color: #fff;
+}
+
+.answered__question {
+  cursor: pointer;
+  background-color: rgb(135, 135, 135);
+  color: #fff;
+  text-decoration: line-through;
 }
 
 .loading {
