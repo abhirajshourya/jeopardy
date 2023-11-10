@@ -184,7 +184,6 @@ class JeopardyQuestion {
   answer = '';
   value = 0; // 100, 200, 300, 400, 500
   category = '';
-  isAnswered = false;
   isCorrect = false;
 
   constructor(question, answer, value, category) {
@@ -244,18 +243,17 @@ class JeopardyQuestion {
 
     modal.appendChild(modalQuestions);
 
-    if (this.isAnswered) {
+    if (cell.classList.contains('answered__question')) {
       answer.style.visibility = 'visible';
       answerBtn.style.display = 'none';
     } else {
       answerBtn.addEventListener('click', () => {
         answer.style.visibility = 'visible';
         cell.classList.add('answered__question');
-        this.isAnswered = true;
         updateScore(this.value);
       });
     }
-    
+
     return modal;
   }
 }
