@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -15,10 +17,20 @@
   align-items: center;
 }
 
+.welcomePage__title {
+  font-size: 48px;
+  background: -webkit-linear-gradient(#1535b3, #2fbcdf);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-family: 'Bungee', sans-serif;
+}
+
 .welcomePage__img {
   margin: 80px;
   display: block;
   height: 40%;
+  border-radius: 2rem;
 }
 
 .welcomePage__button {
@@ -189,9 +201,15 @@ td:hover {
   text-decoration: line-through;
 }
 
+.loading__Page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .loading {
-  margin: auto;
-  display: block;
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
   border-radius: 50%;

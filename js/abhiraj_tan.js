@@ -48,15 +48,19 @@ class JeopardyGame {
 
   async createBoard() {
     //loading screen
+    let loadingPage = document.createElement('div');
+    loadingPage.setAttribute('id', 'loadingPage');
+    loadingPage.setAttribute('class', 'loading__Page');
+    document.body.appendChild(loadingPage);
     let loading = document.createElement('div');
     loading.setAttribute('id', 'loading');
     loading.setAttribute('class', 'loading');
-    document.body.appendChild(loading);
+    loadingPage.appendChild(loading);
 
     //load categories
-    this.categories = await fetch(`https://jservice.io/api/categories?count=6&offset=10`).then(
-      (response) => response.json()
-    );
+    // this.categories = await fetch(`https://jservice.io/api/categories?count=6&offset=10`).then(
+    //   (response) => response.json()
+    // );
 
     let board = document.createElement('div');
     board.setAttribute('id', 'board');
@@ -80,7 +84,8 @@ class JeopardyGame {
       let tableHead = document.createElement('th');
       tableHead.setAttribute('id', `tableHead-${i}`);
       tableHead.setAttribute('class', 'table__head');
-      tableHead.innerHTML = `${this.categories[i - 1].title}`;
+      // tableHead.innerHTML = `${this.categories[i - 1].title}`;
+      tableHead.innerHTML = `Category ${i}`;
       tableHeaders.appendChild(tableHead);
     }
     table.appendChild(tableHeaders);
@@ -95,26 +100,32 @@ class JeopardyGame {
       tableRow.setAttribute('class', 'table__row');
       for (let j = 1; j <= 6; j++) {
         //load clue
-        let clue = await fetch(
-          `https://jservice.io/api/clues?category=${this.categories[j - 1].id}&value=${
-            this.values[i - 1]
-          }`
-        ).then((response) => response.json());
+        // let clue = await fetch(
+        //   `https://jservice.io/api/clues?category=${this.categories[j - 1].id}&value=${
+        //     this.values[i - 1]
+        //   }`
+        // ).then((response) => response.json());
 
-        let question = new JeopardyQuestion(
-          clue[0].question,
-          clue[0].answer,
-          clue[0].value,
-          this.categories[j - 1].title
-        );
+        // let question = new JeopardyQuestion(
+        //   clue[0].question,
+        //   clue[0].answer,
+        //   clue[0].value,
+        //   this.categories[j - 1].title
+        // );
 
-        this.questions.push(question);
+        // this.questions.push(question);
 
         let cell = document.createElement('td');
         cell.setAttribute('id', `tableData-${i}-${j}`);
         cell.setAttribute('class', 'table__data');
-        cell.innerHTML = `${clue[0].value}`;
+        cell.innerHTML = `${this.values[i - 1]}`;
         cell.addEventListener('click', () => {
+          let question = new JeopardyQuestion(
+            `Question ${i} ${j}`,
+            `Answer ${i} ${j}`,
+            this.values[i - 1],
+            `Category ${j}`
+          );
           let modal = question.createQuestionModal(cell);
           board.appendChild(modal);
         });
@@ -146,7 +157,7 @@ class JeopardyGame {
     document.body.appendChild(controlBoard);
 
     //remove loading
-    document.body.removeChild(loading);
+    document.body.removeChild(loadingPage);
   }
 }
 
@@ -200,11 +211,6 @@ class JeopardyQuestion {
     answerBtn.setAttribute('id', `answerBtn`);
     answerBtn.setAttribute('class', `answer__btn`);
     answerBtn.innerHTML = 'Show Answer';
-    answerBtn.addEventListener('click', () => {
-      answer.style.visibility = 'visible';
-      this.isAnswered = true;
-      cell.classList.add('answered__question');
-    });
 
     let cancelBtn = document.createElement('button');
     cancelBtn.setAttribute('id', `cancelBtn`);
@@ -219,6 +225,17 @@ class JeopardyQuestion {
     modalQuestions.appendChild(groupBtn);
 
     modal.appendChild(modalQuestions);
+
+    if (this.isAnswered) {
+      answer.style.visibility = 'visible';
+      answerBtn.style.display = 'none';
+    } else {
+      answerBtn.addEventListener('click', () => {
+        answer.style.visibility = 'visible';
+        this.isAnswered = true;
+        cell.classList.add('answered__question');
+      });
+    }
 
     return modal;
   }
