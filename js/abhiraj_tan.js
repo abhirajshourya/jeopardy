@@ -210,7 +210,7 @@ class JeopardyQuestion {
     modalHeader.setAttribute('class', 'modal__header');
     modalHeader.innerHTML = `$${this.value}`;
     modalQuestions.appendChild(modalHeader);
-    let question = document.createElement('h1');
+    let question = document.createElement('h2');
     question.setAttribute('id', `question`);
     question.setAttribute('class', 'question');
     question.innerHTML = this.question;
@@ -250,12 +250,12 @@ class JeopardyQuestion {
     } else {
       answerBtn.addEventListener('click', () => {
         answer.style.visibility = 'visible';
-        this.isAnswered = true;
         cell.classList.add('answered__question');
+        this.isAnswered = true;
         updateScore(this.value);
       });
     }
-
+    
     return modal;
   }
 }
