@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background: linear-gradient(to right bottom, rgb(177, 215, 255), rgb(255, 186, 186));
+}
+
 /*
 * Styling welcome section
 */
@@ -21,6 +25,7 @@
   font-size: 48px;
   background: -webkit-linear-gradient(#1535b3, #2fbcdf);
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
   font-family: 'Bungee', sans-serif;
@@ -29,7 +34,7 @@
 .welcomePage__img {
   margin: 80px;
   display: block;
-  height: 40%;
+  height: 420px;
   border-radius: 2rem;
 }
 
@@ -40,68 +45,100 @@
   cursor: pointer;
   font-size: 20px;
   border-radius: 12px;
-  background-color: #fff;
-  border: 2px solid blue;
-  color: blue;
+  background-color: #ffffff79;
+  border: 2px solid #143479;
+  color: #143479;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 .welcomePage__button:hover {
   border: 2px solid #143479;
-  background-color: #2865ea;
-  color: #fff;
+  color: #143479;
+  box-shadow: rgb(122, 193, 255) 3px 3px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
-/**
-* Styling game board
-*/
 .board {
+  background: url('./assets/imgs/table_bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
   margin: auto;
-  max-width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
 }
 
-.gameboard__img {
-  width: 100%;
-  height: 20%;
-  flex-grow: 1;
+/* Styling control board */
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.13);
+  width: 70vw;
+  display: flex;
+  justify-content: right;
+  border-radius: 1rem 1rem 0 0;
 }
 
+.control__board {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.reset__btn {
+  margin: 1rem;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.reset__btn:hover {
+  background-color: rgb(247, 74, 74);
+}
+
+/* Styling game board */
 .table {
   border-spacing: 0;
-  width: 100%;
+  width: 70vw;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .table__headers {
 }
+
 .table__head {
-  background-color: #000;
+  border: 2px solid #000;
+  background-color: blue;
   color: #fff;
   font-size: 24px;
-  font-weight: 900;
+  font-family: 'Bungee', sans-serif;
+  text-align: center;
+  padding: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-th,
 td {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   border: 2px solid #000;
   padding: 20px;
   background-color: blue;
   text-align: center;
   color: yellow;
-}
-
-th {
-  color: #fff;
-  font-size: 24px;
-}
-
-td {
   cursor: pointer;
-  font-weight: 900;
-  font-size: 48px;
+  font-weight: bold;
+  font-size: 36px;
 }
 
 td:hover {
@@ -178,32 +215,18 @@ td:hover {
   border: 1px solid rgb(247, 74, 74);
 }
 
-/* Styling control board */
-.control__board {
-  margin: auto;
-  max-width: 1200px;
-  width: 100%;
-  height: 20%;
-  display: flex;
-  justify-content: center;
-}
-
-.reset__btn {
-  padding: 12px 20px;
-  margin: 40px;
-  cursor: pointer;
-  font-size: 18px;
-  background-color: red;
-  border: 1px solid red;
-  border-radius: 4px;
-  color: #fff;
-}
-
 .answered__question {
   cursor: pointer;
-  background-color: rgb(135, 135, 135);
-  color: #fff;
+  background-color: rgba(117, 175, 255, 0.498);
+  color: #00000070;
   text-decoration: line-through;
+}
+
+.answered__question:hover {
+  background-color: rgba(60, 141, 255, 0.657);
+  border: 2px solid greenyellow;
+  opacity: 0.8;
+  color: #000;
 }
 
 .loading__Page {

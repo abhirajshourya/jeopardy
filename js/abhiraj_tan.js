@@ -15,6 +15,11 @@ class JeopardyGame {
     this.score = 0;
   }
 
+  updateScore = (value) => {
+    this.score += value;
+    document.getElementById('scoreBoard').innerHTML = `Score: $${this.score}`;
+  };
+
   welcomePage() {
     let welcomePage = document.createElement('div');
     welcomePage.setAttribute('id', 'welcomePage');
@@ -66,12 +71,6 @@ class JeopardyGame {
     board.setAttribute('id', 'board');
     board.setAttribute('class', 'board');
 
-    //add image, headers, and score
-    let gameBoardImg = document.createElement('img');
-    gameBoardImg.setAttribute('id', 'gameBoardImg');
-    gameBoardImg.setAttribute('class', 'gameboard__img');
-    gameBoardImg.src = './assets/imgs/inside-jeopardy.jpg';
-
     let table = document.createElement('table');
     table.setAttribute('id', 'table');
     table.setAttribute('class', 'table');
@@ -118,7 +117,7 @@ class JeopardyGame {
         let cell = document.createElement('td');
         cell.setAttribute('id', `tableData-${i}-${j}`);
         cell.setAttribute('class', 'table__data');
-        cell.innerHTML = `${this.values[i - 1]}`;
+        cell.innerHTML = `$${this.values[i - 1]}`;
         cell.addEventListener('click', () => {
           let question = new JeopardyQuestion(
             `Question ${i} ${j}`,
@@ -126,7 +125,7 @@ class JeopardyGame {
             this.values[i - 1],
             `Category ${j}`
           );
-          let modal = question.createQuestionModal(cell);
+          let modal = question.createQuestionModal(cell, this.updateScore);
           board.appendChild(modal);
         });
         tableRow.appendChild(cell);
@@ -142,19 +141,31 @@ class JeopardyGame {
     let resetBtn = document.createElement('button');
     resetBtn.setAttribute('id', 'resetBtn');
     resetBtn.setAttribute('class', 'reset__btn');
-    resetBtn.innerHTML = 'RESET GAME';
+    resetBtn.innerHTML = 'Reset';
     resetBtn.addEventListener('click', () => {
       if (confirm('Are you sure to reset this game?')) {
         document.body.innerHTML = '';
-        this.welcomePage();
+        this.createBoard();
       }
     });
+
+    let scoreBoard = document.createElement('div');
+    scoreBoard.setAttribute('id', 'scoreBoard');
+    scoreBoard.setAttribute('class', 'score__board');
+    scoreBoard.innerHTML = `Score: $${this.score}`;
+
+    controlBoard.appendChild(scoreBoard);
     controlBoard.appendChild(resetBtn);
 
-    board.appendChild(gameBoardImg);
-    board.appendChild(table);
+    //container
+    let container = document.createElement('div');
+    container.setAttribute('id', 'container');
+    container.setAttribute('class', 'container');
+
+    container.appendChild(controlBoard);
+    container.appendChild(table);
+    board.appendChild(container);
     document.body.appendChild(board);
-    document.body.appendChild(controlBoard);
 
     //remove loading
     document.body.removeChild(loadingPage);
@@ -179,7 +190,7 @@ class JeopardyQuestion {
   /**
    * Function to create the Question Modal.
    */
-  createQuestionModal(cell) {
+  createQuestionModal(cell, updateScore) {
     let modal = document.createElement('div');
     modal.setAttribute('id', 'modal');
     modal.setAttribute('class', 'modal');
@@ -234,6 +245,7 @@ class JeopardyQuestion {
         answer.style.visibility = 'visible';
         this.isAnswered = true;
         cell.classList.add('answered__question');
+        updateScore(this.value);
       });
     }
 
