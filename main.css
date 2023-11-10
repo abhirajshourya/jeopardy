@@ -127,7 +127,7 @@ h1 {
 /* Styling game board */
 .table {
   border-spacing: 0;
-  width: 70vw;
+  width: 90vw;
   padding: 0 1rem 1rem 1rem;
 }
 
@@ -138,7 +138,7 @@ h1 {
   border: 2px solid #000;
   background-color: blue;
   color: #fff;
-  font-size: 24px;
+  font-size: 36px;
   font-family: 'Bungee', sans-serif;
   text-align: center;
   padding: 20px;
