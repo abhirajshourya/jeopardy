@@ -56,7 +56,7 @@ body {
 .welcomePage__button:hover {
   border: 2px solid #143479;
   color: #143479;
-  box-shadow: rgb(122, 193, 255) 3px 3px 6px 0px inset,
+  box-shadow: rgb(0, 38, 72) 3px 3px 6px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
