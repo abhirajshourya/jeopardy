@@ -92,8 +92,8 @@ body {
 }
 
 .reset__btn {
-  margin: 1rem;
-  padding: 12px 20px;
+  margin: 1rem 1rem 1rem 20%;
+  padding: 8px 16px;
   cursor: pointer;
   font-size: 18px;
   background-color: red;
@@ -104,6 +104,24 @@ body {
 
 .reset__btn:hover {
   background-color: rgb(247, 74, 74);
+}
+
+h1 {
+  width: 50%;
+  font-size: 48px;
+  background: -webkit-linear-gradient(#ffe3e3, #afe4ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-family: 'Bungee', sans-serif;
+}
+
+.score__board {
+  width: 30%;
+  padding: 12px 24px;
+  font-size: 48px;
+  color: #ffff00;
 }
 
 /* Styling game board */

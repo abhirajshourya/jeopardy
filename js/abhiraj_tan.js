@@ -145,9 +145,15 @@ class JeopardyGame {
     resetBtn.addEventListener('click', () => {
       if (confirm('Are you sure to reset this game?')) {
         document.body.innerHTML = '';
+        this.score = 0;
         this.createBoard();
       }
     });
+
+    let boardTitle = document.createElement('h1');
+    boardTitle.setAttribute('id', 'boardTitle');
+    boardTitle.setAttribute('class', 'board__title');
+    boardTitle.innerHTML = 'Jeopardy!';
 
     let scoreBoard = document.createElement('div');
     scoreBoard.setAttribute('id', 'scoreBoard');
@@ -155,6 +161,7 @@ class JeopardyGame {
     scoreBoard.innerHTML = `Score: $${this.score}`;
 
     controlBoard.appendChild(scoreBoard);
+    controlBoard.appendChild(boardTitle);
     controlBoard.appendChild(resetBtn);
 
     //container
