@@ -15,10 +15,10 @@ class JeopardyGame {
     this.score = 0;
   }
 
-  updateScore = (value) => {
-    this.score += value;
-    document.getElementById('scoreBoard').innerHTML = `Score: $${this.score}`;
-  };
+  // updateScore = (value) => {
+  //   this.score += value;
+  //   document.getElementById('scoreBoard').innerHTML = `Score: $${this.score}`;
+  // };
 
   welcomePage() {
     let welcomePage = document.createElement('div');
@@ -35,24 +35,45 @@ class JeopardyGame {
     welcomePageImg.setAttribute('class', 'welcomePage__img');
     welcomePageImg.src = './assets/imgs/logo-jeopardy.jpg';
 
+    let inputGroup = document.createElement('div');
+    inputGroup.setAttribute('class', 'input__group');
+
+    let label = document.createElement('label');
+    label.setAttribute('for', 'selection');
+    label.setAttribute('class', 'label__input');
+    label.innerHTML = 'Number of players: ';
+    let selection = document.createElement('select');
+    selection.setAttribute('id', 'selection');
+    selection.setAttribute('name', 'numberOfPlayer');
+    selection.innerHTML = `
+      <option value="1">1</option>
+      <option selected value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    `
+    inputGroup.appendChild(label);
+    inputGroup.appendChild(selection);
+
     let welcomePageButton = document.createElement('button');
     welcomePageButton.setAttribute('id', 'welcomePageButton');
     welcomePageButton.setAttribute('class', 'welcomePage__button');
     welcomePageButton.innerHTML = `Start Game`;
     welcomePageButton.addEventListener('click', () => {
       //clear body and load board
+      let numberOfPlayer = selection.value;
       document.body.innerHTML = '';
-      this.createBoard();
+      this.createBoard(numberOfPlayer);
     });
 
     welcomePage.appendChild(welcomePageTitle);
     welcomePage.appendChild(welcomePageImg);
+    welcomePage.appendChild(inputGroup);
     welcomePage.appendChild(welcomePageButton);
     document.body.appendChild(welcomePage);
   }
 
-  async createBoard() {
-    let numberOfPlayers = 5;
+  async createBoard(numberOfPlayer) {
 
     //loading screen
     let loadingPage = document.createElement('div');
@@ -144,9 +165,12 @@ class JeopardyGame {
     playerTableHeaders.appendChild(playerTableHead);
     playerTable.appendChild(playerTableHeaders);
 
-    for (let index = 0; index < numberOfPlayers; index++) {
+    let score = [];
+
+    for (let index = 0; index < numberOfPlayer; index++) {
+      score.push(0);
+
       let playerTableRow = document.createElement('tr');
-      let score = 0;
       playerTableRow.setAttribute('id', `playerTableRow`);
       playerTableRow.setAttribute('class', 'player__table__row');
 
@@ -166,22 +190,22 @@ class JeopardyGame {
 
       let scoreDisplay = document.createElement('h4');
       scoreDisplay.setAttribute('class', `score__${index}`);
-      scoreDisplay.innerHTML = score;
+      scoreDisplay.innerHTML = score[index];
       let increase = document.createElement('span');
       increase.setAttribute('class', `increase__${index}`);
       increase.innerHTML = '+';
 
       decrease.addEventListener('click', () => {
-        if(score>0){
-          score -= 100;
-          scoreDisplay.innerHTML = score;
+        if(score[index]>0){
+          score[index] -= 100;
+          scoreDisplay.innerHTML = score[index];
         }
       })
 
       increase.addEventListener('click', () => {
-        if(score<9000){
-          score += 100;
-          scoreDisplay.innerHTML = score;
+        if(score[index]<9000){
+          score[index] += 100;
+          scoreDisplay.innerHTML = score[index];
         }
       })
 
@@ -212,7 +236,7 @@ class JeopardyGame {
       if (confirm('Are you sure to reset this game?')) {
         document.body.innerHTML = '';
         this.score = 0;
-        this.createBoard();
+        this.createBoard(numberOfPlayer);
       }
     });
 
