@@ -52,6 +52,8 @@ class JeopardyGame {
   }
 
   async createBoard() {
+    let numberOfPlayers = 5;
+
     //loading screen
     let loadingPage = document.createElement('div');
     loadingPage.setAttribute('id', 'loadingPage');
@@ -71,9 +73,18 @@ class JeopardyGame {
     board.setAttribute('id', 'board');
     board.setAttribute('class', 'board');
 
+    // create container of game board and players
+    let containerTable = document.createElement('div');
+    containerTable.setAttribute('id', 'containerTable');
+    containerTable.setAttribute('class', 'container__table');
+
     let table = document.createElement('table');
     table.setAttribute('id', 'table');
     table.setAttribute('class', 'table');
+
+    let playerTable = document.createElement("table");
+    playerTable.setAttribute('id', "playerTable");
+    playerTable.setAttribute('class', 'player__table');
 
     //create table headers
     let tableHeaders = document.createElement('tr');
@@ -88,10 +99,6 @@ class JeopardyGame {
     }
     table.appendChild(tableHeaders);
 
-    //create table rows
-    let tableRow = document.createElement('tr');
-    tableRow.setAttribute('id', `tableRow`);
-    tableRow.setAttribute('class', 'table__row');
     for (let i = 1; i <= 5; i++) {
       let tableRow = document.createElement('tr');
       tableRow.setAttribute('id', `tableRow-${i}`);
@@ -126,6 +133,72 @@ class JeopardyGame {
       table.appendChild(tableRow);
     }
 
+    //create player table
+    let playerTableHeaders = document.createElement('tr');
+    playerTableHeaders.setAttribute('id', `playerTableHeaders`);
+    playerTableHeaders.setAttribute('class', 'player__table__headers');
+    let playerTableHead = document.createElement('th');
+    playerTableHead.setAttribute('id', `playerTableHead`);
+    playerTableHead.setAttribute('class', 'player__table__head');
+    playerTableHead.innerHTML = `PLAYERS`;
+    playerTableHeaders.appendChild(playerTableHead);
+    playerTable.appendChild(playerTableHeaders);
+
+    for (let index = 0; index < numberOfPlayers; index++) {
+      let playerTableRow = document.createElement('tr');
+      let score = 0;
+      playerTableRow.setAttribute('id', `playerTableRow`);
+      playerTableRow.setAttribute('class', 'player__table__row');
+
+      let cell = document.createElement('td');
+      cell.setAttribute('id', `player-${index}`);
+      cell.setAttribute('class', 'player__data');
+
+      let playerName = document.createElement('span');
+      playerName.setAttribute('class', 'player__name');
+      playerName.innerHTML = `PLAYER ${index + 1}`;
+
+      let playerScore = document.createElement('div');
+      playerScore.setAttribute('class', 'player__score');
+      let decrease = document.createElement('span');
+      decrease.setAttribute('class', `decrease__${index}`);
+      decrease.innerHTML = '-';
+
+      let scoreDisplay = document.createElement('h4');
+      scoreDisplay.setAttribute('class', `score__${index}`);
+      scoreDisplay.innerHTML = score;
+      let increase = document.createElement('span');
+      increase.setAttribute('class', `increase__${index}`);
+      increase.innerHTML = '+';
+
+      decrease.addEventListener('click', () => {
+        if(score>0){
+          score -= 100;
+          scoreDisplay.innerHTML = score;
+        }
+      })
+
+      increase.addEventListener('click', () => {
+        if(score<9000){
+          score += 100;
+          scoreDisplay.innerHTML = score;
+        }
+      })
+
+      playerScore.appendChild(decrease);
+      playerScore.appendChild(scoreDisplay);
+      playerScore.appendChild(increase);
+
+      cell.appendChild(playerName);
+      cell.appendChild(playerScore)
+
+      playerTableRow.appendChild(cell);
+      playerTable.appendChild(playerTableRow);
+    }
+
+    containerTable.appendChild(table);
+    containerTable.appendChild(playerTable);
+
     //create control board
     let controlBoard = document.createElement('div');
     controlBoard.setAttribute('id', 'controlBoard');
@@ -134,7 +207,7 @@ class JeopardyGame {
     let resetBtn = document.createElement('button');
     resetBtn.setAttribute('id', 'resetBtn');
     resetBtn.setAttribute('class', 'reset__btn');
-    resetBtn.innerHTML = 'Reset';
+    resetBtn.innerHTML = 'RESET';
     resetBtn.addEventListener('click', () => {
       if (confirm('Are you sure to reset this game?')) {
         document.body.innerHTML = '';
@@ -163,7 +236,8 @@ class JeopardyGame {
     container.setAttribute('class', 'container');
 
     container.appendChild(controlBoard);
-    container.appendChild(table);
+    // container.appendChild(table);
+    container.appendChild(containerTable);
     board.appendChild(container);
     document.body.appendChild(board);
 

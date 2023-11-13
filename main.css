@@ -85,6 +85,10 @@ body {
   border-radius: 1rem 1rem 0 0;
 }
 
+.container__table{
+    display: flex;
+}
+
 .control__board {
   display: flex;
   justify-content: flex-end;
@@ -98,6 +102,8 @@ body {
   font-size: 18px;
   background-color: red;
   border: 1px solid red;
+  background: rgb(228,92,141);
+  background: linear-gradient(90deg, rgba(228,92,141,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
   border-radius: 4px;
   color: #fff;
 }
@@ -127,9 +133,13 @@ h1 {
 /* Styling game board */
 .table {
   border-spacing: 0;
-  width: 90vw;
+  width: 80vw;
   padding: 0 1rem 1rem 1rem;
   table-layout: fixed;
+}
+
+.player__table{
+    width: 15vw;
 }
 
 .table__headers {
@@ -147,7 +157,7 @@ h1 {
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-td {
+.table__data {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   border: 2px solid #000;
@@ -160,7 +170,7 @@ td {
   font-size: 36px;
 }
 
-td:hover {
+.table__data:hover {
   border: 2px solid #ffff00;
   opacity: 0.8;
 }
@@ -256,7 +266,6 @@ td:hover {
   cursor: pointer;
   background-color: rgba(117, 175, 255, 0.498);
   color: #00000070;
-  text-decoration: line-through;
 }
 
 .answered__question:hover {
@@ -282,6 +291,91 @@ td:hover {
   height: 120px;
   animation: spin 2s linear infinite;
 }
+
+/* Styling  player table*/
+.player__table{
+    margin: 0 1rem 1rem 0;
+    border-radius: 1rem;
+}
+
+.player__table__head{
+  background: -webkit-linear-gradient(#ffe3e3, #afe4ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 28px;
+  font-family: 'Bungee', sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.player__table__row{
+    display: block;
+    min-height: 100px;
+}
+
+.player__data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 1rem;
+    text-align: center;
+    padding: 0 4px;
+    min-height: 100px;
+    margin-top: 4px;
+}
+
+.player__data:hover{
+    border: 2px solid yellow;
+}
+
+.player__data .player__name{
+    font-family: 'Bungee', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    background: -webkit-linear-gradient(#1535b3, #2fbcdf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.player__score{
+    display: flex;
+    min-height: 32px;
+    justify-content: center;
+    font-weight: 800;
+}
+
+[class^="score"]{
+    font-size: 36px;
+    margin: 0 1rem;
+    color: yellow;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+[class^="decrease"], [class^="increase"]{
+    padding:  2px 14px;
+    font-size: 32px;
+    font-family: 'Bungee', sans-serif;
+    color: yellow;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+[class^="decrease"]:hover, [class^="increase"]:hover{
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
 
 @keyframes spin {
   0% {
