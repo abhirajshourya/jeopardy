@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background: linear-gradient(to right bottom, rgb(177, 215, 255), rgb(255, 186, 186));
+}
+
 /*
 * Styling welcome section
 */
@@ -21,6 +25,7 @@
   font-size: 48px;
   background: -webkit-linear-gradient(#1535b3, #2fbcdf);
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
   font-family: 'Bungee', sans-serif;
@@ -29,7 +34,7 @@
 .welcomePage__img {
   margin: 80px;
   display: block;
-  height: 40%;
+  height: 420px;
   border-radius: 2rem;
 }
 
@@ -40,68 +45,119 @@
   cursor: pointer;
   font-size: 20px;
   border-radius: 12px;
-  background-color: #fff;
-  border: 2px solid blue;
-  color: blue;
+  background-color: #ffffff79;
+  border: 2px solid #143479;
+  color: #143479;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 .welcomePage__button:hover {
   border: 2px solid #143479;
-  background-color: #2865ea;
-  color: #fff;
+  color: #143479;
+  box-shadow: rgb(0, 38, 72) 3px 3px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
-/**
-* Styling game board
-*/
 .board {
+  background: url('./assets/imgs/table_bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
   margin: auto;
-  max-width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
 }
 
-.gameboard__img {
-  width: 100%;
-  height: 20%;
-  flex-grow: 1;
+/* Styling control board */
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.13);
+  width: fit-content;
+  display: flex;
+  justify-content: right;
+  border-radius: 1rem 1rem 0 0;
 }
 
+.control__board {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.reset__btn {
+  margin: 1rem 1rem 1rem 20%;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 18px;
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.reset__btn:hover {
+  background-color: rgb(247, 74, 74);
+}
+
+h1 {
+  width: 50%;
+  font-size: 48px;
+  background: -webkit-linear-gradient(#ffe3e3, #afe4ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-family: 'Bungee', sans-serif;
+}
+
+.score__board {
+  width: 30%;
+  padding: 12px 24px;
+  font-size: 48px;
+  color: #ffff00;
+}
+
+/* Styling game board */
 .table {
   border-spacing: 0;
-  width: 100%;
+  width: 90vw;
+  padding: 0 1rem 1rem 1rem;
+  table-layout: fixed;
 }
 
 .table__headers {
 }
+
 .table__head {
-  background-color: #000;
+  border: 2px solid #000;
+  background-color: rgb(0, 0, 185);
   color: #fff;
   font-size: 24px;
-  font-weight: 900;
+  font-family: 'Bungee', sans-serif;
+  text-align: center;
+  padding: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-th,
 td {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   border: 2px solid #000;
-  padding: 20px;
+  padding: 30px;
   background-color: blue;
   text-align: center;
   color: yellow;
-}
-
-th {
-  color: #fff;
-  font-size: 24px;
-}
-
-td {
   cursor: pointer;
-  font-weight: 900;
-  font-size: 48px;
+  font-weight: bold;
+  font-size: 36px;
 }
 
 td:hover {
@@ -112,11 +168,9 @@ td:hover {
 /* Styling Modal questions */
 .modal {
   position: fixed;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80%;
   margin: auto;
   z-index: 2;
   background-color: rgba(0, 0, 0, 0.2);
@@ -124,86 +178,92 @@ td:hover {
 
 .modal__questions {
   position: fixed;
-  width: 80%;
-  height: 70%;
+  width: 600px;
+  height: 400px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 1rem;
   border: 2px solid #fff;
   background-color: blue;
 }
 
 .modal__header {
   padding: 12px;
-  font-size: 32px;
+  font-size: 48px;
   color: #ffff00;
-  border-bottom: 1px solid #ffff00;
+  border-bottom: 4px solid #ffff00;
 }
 
 .question {
-  margin-top: 50px;
+  width: 100%;
   padding: 0 40px;
   min-height: 40%;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 60px;
-  font-size: 48px;
+  font-size: 24px;
   color: #fff;
+  font-family: 'Inter', sans-serif;
 }
 
 .answer {
-  height: 10%;
-  font-size: 32px;
+  font-size: 24px;
   color: #ffff00;
+  font-family: 'Inter', sans-serif;
   visibility: hidden;
 }
 
+.group__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
 .group__btn button {
-  margin: 80px 40px;
-  padding: 16px 20px;
+  margin: 1rem;
+  padding: 8px 16px;
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 .answer__btn {
-  color: #fff;
-  background-color: rgb(54, 240, 54);
-  border: 1px solid greenyellow;
+  color: darkgreen;
+  background-color: greenyellow;
+  border: 2px solid darkgreen;
+}
+
+.answer__btn:hover {
+  opacity: 0.8;
 }
 
 .cancel__btn {
-  color: #fff;
-  background-color: red;
-  border: 1px solid rgb(247, 74, 74);
+  color: #000;
+  background-color: rgb(247, 74, 74);
+  border: 2px solid rgb(247, 74, 74);
 }
 
-/* Styling control board */
-.control__board {
-  margin: auto;
-  max-width: 1200px;
-  width: 100%;
-  height: 20%;
-  display: flex;
-  justify-content: center;
-}
-
-.reset__btn {
-  padding: 12px 20px;
-  margin: 40px;
-  cursor: pointer;
-  font-size: 18px;
-  background-color: red;
-  border: 1px solid red;
-  border-radius: 4px;
-  color: #fff;
+.cancel__btn:hover {
+  background-color: rgb(247, 74, 74);
+  border: 2px solid rgb(247, 74, 74);
+  opacity: 0.8;
 }
 
 .answered__question {
   cursor: pointer;
-  background-color: rgb(135, 135, 135);
-  color: #fff;
+  background-color: rgba(117, 175, 255, 0.498);
+  color: #00000070;
   text-decoration: line-through;
+}
+
+.answered__question:hover {
+  background-color: rgba(60, 141, 255, 0.657);
+  border: 2px solid greenyellow;
+  opacity: 0.8;
+  color: #000;
 }
 
 .loading__Page {
