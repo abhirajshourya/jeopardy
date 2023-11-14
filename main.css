@@ -32,7 +32,7 @@ body {
 }
 
 .welcomePage__img {
-  margin: 80px;
+  margin: 40px;
   display: block;
   height: 420px;
   border-radius: 2rem;
@@ -353,10 +353,14 @@ h1 {
     border: 2px solid yellow;
 }
 
-.player__data .player__name{
+.player__data .player__name__input{
     font-family: 'Bungee', sans-serif;
+    text-align: center;
     font-size: 24px;
     font-weight: 600;
+    max-width: 160px;
+    border-color: transparent;
+    border-bottom: 1px solid grey;
     background: -webkit-linear-gradient(#1535b3, #2fbcdf);
     background-clip: text;
     -webkit-background-clip: text;
@@ -366,6 +370,16 @@ h1 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.player__name__input::placeholder{
+  font-size: 20px;
+  font-weight: lighter;
+  background: -webkit-linear-gradient(#ffe3e3, #afe4ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 .player__score{

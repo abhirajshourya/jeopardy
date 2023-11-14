@@ -180,7 +180,11 @@ class JeopardyGame {
 
       let playerName = document.createElement('span');
       playerName.setAttribute('class', 'player__name');
-      playerName.innerHTML = `PLAYER ${index + 1}`;
+      // playerName.innerHTML = `PLAYER ${index + 1}`;
+
+      playerName.innerHTML = `
+        <input type="text" placeholder="Enter Name" class="player__name__input">
+      `;
 
       let playerScore = document.createElement('div');
       playerScore.setAttribute('class', 'player__score');
