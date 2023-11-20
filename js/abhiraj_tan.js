@@ -6,19 +6,16 @@
 class JeopardyGame {
   questions = [];
   categories = [];
-  score = 0;
+  score = [];
+  winner = [];
   values = [100, 200, 300, 400, 500];
-
+  
   constructor() {
     this.questions = [];
     this.categories = [];
-    this.score = 0;
+    this.score = [];
+    this.winner = [];
   }
-
-  // updateScore = (value) => {
-  //   this.score += value;
-  //   document.getElementById('scoreBoard').innerHTML = `Score: $${this.score}`;
-  // };
 
   welcomePage() {
     let welcomePage = document.createElement('div');
@@ -63,7 +60,7 @@ class JeopardyGame {
       //clear body and load board
       let numberOfPlayer = selection.value;
       document.body.innerHTML = '';
-      this.createBoard(numberOfPlayer);
+      this.createBoard(numberOfPlayer, this.score);
     });
 
     welcomePage.appendChild(welcomePageTitle);
@@ -73,8 +70,7 @@ class JeopardyGame {
     document.body.appendChild(welcomePage);
   }
 
-  async createBoard(numberOfPlayer) {
-
+  async createBoard(numberOfPlayer, score) {
     //loading screen
     let loadingPage = document.createElement('div');
     loadingPage.setAttribute('id', 'loadingPage');
@@ -165,10 +161,8 @@ class JeopardyGame {
     playerTableHeaders.appendChild(playerTableHead);
     playerTable.appendChild(playerTableHeaders);
 
-    let score = [];
 
     for (let index = 0; index < numberOfPlayer; index++) {
-      score.push(0);
 
       let playerTableRow = document.createElement('tr');
       playerTableRow.setAttribute('id', `playerTableRow`);
@@ -180,11 +174,23 @@ class JeopardyGame {
 
       let playerName = document.createElement('span');
       playerName.setAttribute('class', 'player__name');
-      // playerName.innerHTML = `PLAYER ${index + 1}`;
 
-      playerName.innerHTML = `
-        <input type="text" placeholder="Enter Name" class="player__name__input">
-      `;
+      let inputPlayerName = document.createElement('input');
+      inputPlayerName.setAttribute('placeholder', 'Enter Name');
+      inputPlayerName.setAttribute('class', 'player__name__input');
+      playerName.appendChild(inputPlayerName);
+
+      if(inputPlayerName.value != '')
+      score.push({
+        score: 0,
+        playerName: inputPlayerName.value
+      })
+      else{
+        score.push({
+          score: 0,
+          playerName: `Player ${index}`
+        })
+      }
 
       let playerScore = document.createElement('div');
       playerScore.setAttribute('class', 'player__score');
@@ -194,22 +200,24 @@ class JeopardyGame {
 
       let scoreDisplay = document.createElement('h4');
       scoreDisplay.setAttribute('class', `score__${index}`);
-      scoreDisplay.innerHTML = score[index];
+      scoreDisplay.innerHTML = score[index].score;
       let increase = document.createElement('span');
       increase.setAttribute('class', `increase__${index}`);
       increase.innerHTML = '+';
 
       decrease.addEventListener('click', () => {
-        if(score[index]>0){
-          score[index] -= 100;
-          scoreDisplay.innerHTML = score[index];
+        if(score[index].score>0){
+          score[index].score -= 100;
+          score[index].playerName = inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
+          scoreDisplay.innerHTML = score[index].score;
         }
       })
 
       increase.addEventListener('click', () => {
-        if(score[index]<9000){
-          score[index] += 100;
-          scoreDisplay.innerHTML = score[index];
+        if(score[index].score<9000){
+          score[index].score += 100;
+          score[index].playerName = inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
+          scoreDisplay.innerHTML = score[index].score;
         }
       })
 
@@ -239,22 +247,33 @@ class JeopardyGame {
     resetBtn.addEventListener('click', () => {
       if (confirm('Are you sure to reset this game?')) {
         document.body.innerHTML = '';
-        this.score = 0;
-        this.createBoard(numberOfPlayer);
+        score.forEach(element => {
+          element.score = 0;
+          element.playerName = '';
+        });
+        this.createBoard(numberOfPlayer, score);
       }
     });
+
+    let finishedBtn = document.createElement('button');
+    finishedBtn.setAttribute('id', 'finishBtn');
+    finishedBtn.setAttribute('class', 'finish__btn');
+    finishedBtn.innerHTML = 'FINISH';
+    finishedBtn.addEventListener('click', () => {
+      if (confirm('Are you sure to finish this game?')) {
+        let winPlayer = {
+          ...this.checkWinner()
+        }
+        this.winner.push(winPlayer);
+      }
+    });
+    playerTable.appendChild(finishedBtn);
 
     let boardTitle = document.createElement('h1');
     boardTitle.setAttribute('id', 'boardTitle');
     boardTitle.setAttribute('class', 'board__title');
     boardTitle.innerHTML = 'Jeopardy!';
 
-    let scoreBoard = document.createElement('div');
-    scoreBoard.setAttribute('id', 'scoreBoard');
-    scoreBoard.setAttribute('class', 'score__board');
-    scoreBoard.innerHTML = `Score: $${this.score}`;
-
-    controlBoard.appendChild(scoreBoard);
     controlBoard.appendChild(boardTitle);
     controlBoard.appendChild(resetBtn);
 
@@ -264,13 +283,26 @@ class JeopardyGame {
     container.setAttribute('class', 'container');
 
     container.appendChild(controlBoard);
-    // container.appendChild(table);
     container.appendChild(containerTable);
     board.appendChild(container);
     document.body.appendChild(board);
 
     //remove loading
     document.body.removeChild(loadingPage);
+  }
+
+  checkWinner() {
+    
+    let indexOfWinner = 0;
+    let highestScore = this.score[0].score;
+    for(let index = 0; index < this.score.length; index++){
+      if(this.score[index].score > highestScore){
+        highestScore = this.score[index].score;
+        indexOfWinner = index;
+      }
+    }
+
+    return this.score[indexOfWinner];
   }
 }
 
@@ -345,7 +377,6 @@ class JeopardyQuestion {
       answerBtn.addEventListener('click', () => {
         answer.style.visibility = 'visible';
         cell.classList.add('answered__question');
-        updateScore(this.value);
       });
     }
 
