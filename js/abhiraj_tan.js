@@ -9,7 +9,7 @@ class JeopardyGame {
   score = [];
   winner = [];
   values = [100, 200, 300, 400, 500];
-  
+
   constructor() {
     this.questions = [];
     this.categories = [];
@@ -38,7 +38,7 @@ class JeopardyGame {
     let label = document.createElement('label');
     label.setAttribute('for', 'selection');
     label.setAttribute('class', 'label__input');
-    label.innerHTML = 'Number of players: ';
+    label.innerHTML = 'Select Number of Players: ';
     let selection = document.createElement('select');
     selection.setAttribute('id', 'selection');
     selection.setAttribute('name', 'numberOfPlayer');
@@ -48,7 +48,7 @@ class JeopardyGame {
       <option value="3">3</option>
       <option value="4">4</option>
       <option value="5">5</option>
-    `
+    `;
     inputGroup.appendChild(label);
     inputGroup.appendChild(selection);
 
@@ -99,8 +99,8 @@ class JeopardyGame {
     table.setAttribute('id', 'table');
     table.setAttribute('class', 'table');
 
-    let playerTable = document.createElement("table");
-    playerTable.setAttribute('id', "playerTable");
+    let playerTable = document.createElement('table');
+    playerTable.setAttribute('id', 'playerTable');
     playerTable.setAttribute('class', 'player__table');
 
     //create table headers
@@ -161,9 +161,7 @@ class JeopardyGame {
     playerTableHeaders.appendChild(playerTableHead);
     playerTable.appendChild(playerTableHeaders);
 
-
     for (let index = 0; index < numberOfPlayer; index++) {
-
       let playerTableRow = document.createElement('tr');
       playerTableRow.setAttribute('id', `playerTableRow`);
       playerTableRow.setAttribute('class', 'player__table__row');
@@ -180,16 +178,16 @@ class JeopardyGame {
       inputPlayerName.setAttribute('class', 'player__name__input');
       playerName.appendChild(inputPlayerName);
 
-      if(inputPlayerName.value != '')
-      score.push({
-        score: 0,
-        playerName: inputPlayerName.value
-      })
-      else{
+      if (inputPlayerName.value != '')
         score.push({
           score: 0,
-          playerName: `Player ${index}`
-        })
+          playerName: inputPlayerName.value,
+        });
+      else {
+        score.push({
+          score: 0,
+          playerName: `Player ${index}`,
+        });
       }
 
       let playerScore = document.createElement('div');
@@ -206,27 +204,29 @@ class JeopardyGame {
       increase.innerHTML = '+';
 
       decrease.addEventListener('click', () => {
-        if(score[index].score>0){
+        if (score[index].score > 0) {
           score[index].score -= 100;
-          score[index].playerName = inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
+          score[index].playerName =
+            inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
           scoreDisplay.innerHTML = score[index].score;
         }
-      })
+      });
 
       increase.addEventListener('click', () => {
-        if(score[index].score<9000){
+        if (score[index].score < 9000) {
           score[index].score += 100;
-          score[index].playerName = inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
+          score[index].playerName =
+            inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
           scoreDisplay.innerHTML = score[index].score;
         }
-      })
+      });
 
       playerScore.appendChild(decrease);
       playerScore.appendChild(scoreDisplay);
       playerScore.appendChild(increase);
 
       cell.appendChild(playerName);
-      cell.appendChild(playerScore)
+      cell.appendChild(playerScore);
 
       playerTableRow.appendChild(cell);
       playerTable.appendChild(playerTableRow);
@@ -247,7 +247,7 @@ class JeopardyGame {
     resetBtn.addEventListener('click', () => {
       if (confirm('Are you sure to reset this game?')) {
         document.body.innerHTML = '';
-        score.forEach(element => {
+        score.forEach((element) => {
           element.score = 0;
           element.playerName = '';
         });
@@ -262,8 +262,8 @@ class JeopardyGame {
     finishedBtn.addEventListener('click', () => {
       if (confirm('Are you sure to finish this game?')) {
         let winPlayer = {
-          ...this.checkWinner()
-        }
+          ...this.checkWinner(),
+        };
         this.winner.push(winPlayer);
       }
     });
@@ -292,11 +292,10 @@ class JeopardyGame {
   }
 
   checkWinner() {
-    
     let indexOfWinner = 0;
     let highestScore = this.score[0].score;
-    for(let index = 0; index < this.score.length; index++){
-      if(this.score[index].score > highestScore){
+    for (let index = 0; index < this.score.length; index++) {
+      if (this.score[index].score > highestScore) {
         highestScore = this.score[index].score;
         indexOfWinner = index;
       }

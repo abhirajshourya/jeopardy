@@ -38,27 +38,27 @@ body {
   border-radius: 2rem;
 }
 
-.input__group{
+.input__group {
+  /* border: 1px solid #1535b3; */
+  border-radius: 0.5rem;
+  background-color: #5b5b5b1d;
   margin: 2rem;
+  padding: 0.8rem;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-.label__input{
-  font-size: 32px;
-  background: -webkit-linear-gradient(#1535b3, #2fbcdf);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.label__input {
+  font-size: 24px;
 }
 
 select {
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    font-size: 32px;
-    background: -webkit-linear-gradient(#1535b3, #2fbcdf);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: transparent;
+  font-size: 24px;
 }
 
 .welcomePage__button {
@@ -79,8 +79,7 @@ select {
 .welcomePage__button:hover {
   border: 2px solid #143479;
   color: #143479;
-  box-shadow: rgb(0, 38, 72) 3px 3px 6px 0px inset,
-    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  box-shadow: rgb(0, 38, 72) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
 .board {
@@ -108,8 +107,8 @@ select {
   border-radius: 1rem 1rem 0 0;
 }
 
-.container__table{
-    display: flex;
+.container__table {
+  display: flex;
 }
 
 .control__board {
@@ -125,8 +124,13 @@ select {
   font-size: 18px;
   background-color: red;
   border: 1px solid red;
-  background: rgb(228,92,141);
-  background: linear-gradient(90deg, rgba(228,92,141,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+  background: rgb(228, 92, 141);
+  background: linear-gradient(
+    90deg,
+    rgba(228, 92, 141, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
   border-radius: 4px;
   color: #fff;
 }
@@ -139,8 +143,13 @@ select {
   font-size: 18px;
   background-color: blue;
   border: 1px solid blue;
-  background: rgb(0,23,138);
-  background: linear-gradient(90deg, rgba(0,23,138,1) 0%, rgba(36,134,172,1) 50%, rgba(0,212,255,1) 100%);
+  background: rgb(0, 23, 138);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 23, 138, 1) 0%,
+    rgba(36, 134, 172, 1) 50%,
+    rgba(0, 212, 255, 1) 100%
+  );
   border-radius: 4px;
   color: #fff;
 }
@@ -175,8 +184,8 @@ h1 {
   table-layout: fixed;
 }
 
-.player__table{
-    width: 15vw;
+.player__table {
+  width: 15vw;
 }
 
 .table__headers {
@@ -332,12 +341,12 @@ h1 {
 }
 
 /* Styling  player table*/
-.player__table{
-    margin: 0 1rem 1rem 0;
-    border-radius: 1rem;
+.player__table {
+  margin: 0 1rem 1rem 0;
+  border-radius: 1rem;
 }
 
-.player__table__head{
+.player__table__head {
   background: -webkit-linear-gradient(#ffe3e3, #afe4ff);
   background-clip: text;
   -webkit-background-clip: text;
@@ -348,92 +357,93 @@ h1 {
   padding: 20px;
 }
 
-.player__table__row{
-    display: block;
-    min-height: 100px;
+.player__table__row {
+  display: block;
+  min-height: 100px;
 }
 
-.player__data{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    border-radius: 1rem;
-    text-align: center;
-    padding: 0 4px;
-    min-height: 100px;
-    margin-top: 4px;
+.player__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1rem;
+  text-align: center;
+  padding: 0 4px;
+  min-height: 100px;
+  margin-top: 4px;
 }
 
-.player__data:hover{
-    border: 2px solid yellow;
+.player__data:hover {
+  border: 2px solid yellow;
 }
 
-.player__data .player__name__input{
-    font-family: 'Bungee', sans-serif;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 600;
-    max-width: 160px;
-    border-color: transparent;
-    border-bottom: 1px solid grey;
-    background: -webkit-linear-gradient(#1535b3, #2fbcdf);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.player__data .player__name__input {
+  font-family: 'Bungee', sans-serif;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  max-width: 160px;
+  border-color: transparent;
+  border-bottom: 1px solid grey;
+  background: -webkit-linear-gradient(#1535b3, #2fbcdf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.player__name__input::placeholder{
+.player__name__input::placeholder {
   font-size: 20px;
   font-weight: lighter;
-  background: -webkit-linear-gradient(#ffe3e3, #afe4ff);
+  background: -webkit-linear-gradient(#000000, #152e3b);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-touch-callout: none;
 }
 
-.player__score{
-    display: flex;
-    min-height: 32px;
-    justify-content: center;
-    font-weight: 800;
+.player__score {
+  display: flex;
+  min-height: 32px;
+  justify-content: center;
+  font-weight: 800;
 }
 
-[class^="score"]{
-    font-size: 36px;
-    margin: 0 1rem;
-    color: yellow;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+[class^='score'] {
+  font-size: 36px;
+  margin: 0 1rem;
+  color: yellow;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-[class^="decrease"], [class^="increase"]{
-    padding:  2px 14px;
-    font-size: 32px;
-    font-family: 'Bungee', sans-serif;
-    color: yellow;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+[class^='decrease'],
+[class^='increase'] {
+  padding: 2px 14px;
+  font-size: 32px;
+  font-family: 'Bungee', sans-serif;
+  color: yellow;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-[class^="decrease"]:hover, [class^="increase"]:hover{
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+[class^='decrease']:hover,
+[class^='increase']:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
 }
-
 
 @keyframes spin {
   0% {
