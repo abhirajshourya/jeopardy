@@ -133,7 +133,6 @@ select {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
     rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
     rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-  border: 2px solid #143479;
 }
 
 .button__group button:hover {
@@ -142,12 +141,14 @@ select {
 
 .reset__btn {
   background-color: rgba(255, 93, 93, 0.661);
+  border: 2px solid rgba(255, 93, 93, 0.661);
   color: #ccc;
 }
 
 .finish__btn {
-  color: #ccc;
   background-color: rgba(0, 255, 0, 0.5);
+  border: 2px solid rgba(0, 255, 0, 0.5);
+  color: #ccc;
 }
 
 h1 {
@@ -457,7 +458,7 @@ h1 {
   justify-content: center;
 }
 
-.winner__modal__content p{
+.winner__modal__content p {
   background: -webkit-linear-gradient(#ffe3e3, #afe4ff);
   background-clip: text;
   -webkit-background-clip: text;
@@ -469,7 +470,7 @@ h1 {
   width: fit-content;
 }
 
-.winner__modal__content span{
+.winner__modal__content span {
   display: block;
   background: -webkit-linear-gradient(#f8edba, #f0ee7c);
   background-clip: text;
@@ -478,21 +479,24 @@ h1 {
   font-size: 60px;
 }
 
-.winner__modal__btn{
+.winner__modal__btn {
   width: 30%;
   margin: auto;
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-  border: 2px solid #143479;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  border: 2px solid #ff2222;
   background-color: rgba(246, 14, 14, 0.661);
   color: #ccc;
+  font-weight: bold;
 }
 
-.winner__modal__btn:hover{
-  box-shadow: rgb(0, 38, 72) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+.winner__modal__btn:hover {
+  box-shadow: rgb(52, 0, 0) 3px 3px 6px 0px inset, rgba(255, 0, 0, 0.5) -3px -3px 6px 1px inset;
 }
 
 @keyframes spin {

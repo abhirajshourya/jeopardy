@@ -178,6 +178,10 @@ class JeopardyGame {
       let inputPlayerName = document.createElement('input');
       inputPlayerName.setAttribute('placeholder', `Player ${index + 1}`);
       inputPlayerName.setAttribute('class', 'player__name__input');
+      inputPlayerName.addEventListener('change', () => {
+        score[index].playerName =
+          inputPlayerName.value == '' ? `Player ${index + 1}` : inputPlayerName.value;
+      });
       playerName.appendChild(inputPlayerName);
 
       // add score to score array
@@ -290,7 +294,7 @@ class JeopardyGame {
       winnerModalBtn.innerHTML = 'PLAY AGAIN';
 
       winnerModalBtn.addEventListener('click', () => {
-      //reset score
+        //reset score
         score.forEach((element) => {
           element.score = 0;
           element.playerName = '';
@@ -305,11 +309,11 @@ class JeopardyGame {
 
       winnerModalContent.addEventListener('click', (e) => {
         e.stopPropagation();
-      })
+      });
 
       winnerModal.addEventListener('click', (e) => {
         winnerModal.style.display = 'none';
-      })
+      });
     });
 
     buttonGroup.appendChild(finishedBtn);
