@@ -9,6 +9,11 @@ class JeopardyGame {
   score = [];
   winner = [];
   values = [100, 200, 300, 400, 500];
+  /**
+   * This is because all offsets do not have questions for all values and it takes a lot of
+   * time to load the game to skip the empty values programmatically.
+   */
+  workingOffsets = [10, 35, 70, 85];
 
   constructor() {
     this.questions = [];
@@ -82,9 +87,9 @@ class JeopardyGame {
     loadingPage.appendChild(loading);
 
     //load categories
-    this.categories = await fetch(`https://jservice.io/api/categories?count=6&offset=10`).then(
-      (response) => response.json()
-    );
+    this.categories = await fetch(
+      `https://jservice.io/api/categories?count=6&offset=${this.workingOffsets[getRandomInt(4)]}`
+    ).then((response) => response.json());
 
     let board = document.createElement('div');
     board.setAttribute('id', 'board');
@@ -116,7 +121,9 @@ class JeopardyGame {
     }
     table.appendChild(tableHeaders);
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= this.values.length; i++) {
+      // Save loaded api call data in local storage. To avoid multiple api calls.
+
       let tableRow = document.createElement('tr');
       tableRow.setAttribute('id', `tableRow-${i}`);
       tableRow.setAttribute('class', 'table__row');
@@ -381,6 +388,13 @@ class JeopardyQuestion {
 
     return modal;
   }
+}
+
+/**
+ * Helper Functions
+ */
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
 /**

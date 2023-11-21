@@ -188,9 +188,6 @@ h1 {
   width: 15vw;
 }
 
-.table__headers {
-}
-
 .table__head {
   border: 2px solid #000;
   background-color: rgb(0, 0, 185);
