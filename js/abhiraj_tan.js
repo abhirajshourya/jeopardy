@@ -104,10 +104,6 @@ class JeopardyGame {
     table.setAttribute('id', 'table');
     table.setAttribute('class', 'table');
 
-    let playerTable = document.createElement('table');
-    playerTable.setAttribute('id', 'playerTable');
-    playerTable.setAttribute('class', 'player__table');
-
     //create table headers
     let tableHeaders = document.createElement('tr');
     tableHeaders.setAttribute('id', `tableHeaders`);
@@ -156,24 +152,25 @@ class JeopardyGame {
     }
 
     //create player table
-    let playerTableHeaders = document.createElement('tr');
-    playerTableHeaders.setAttribute('id', `playerTableHeaders`);
-    playerTableHeaders.setAttribute('class', 'player__table__headers');
-    let playerTableHead = document.createElement('th');
+    let playerTable = document.createElement('div');
+    playerTable.setAttribute('id', 'playerTable');
+    playerTable.setAttribute('class', 'player__table');
+
+    let playerTableHead = document.createElement('h1');
     playerTableHead.setAttribute('id', `playerTableHead`);
     playerTableHead.setAttribute('class', 'player__table__head');
     playerTableHead.innerHTML = `PLAYERS`;
-    playerTableHeaders.appendChild(playerTableHead);
-    playerTable.appendChild(playerTableHeaders);
+    playerTable.appendChild(playerTableHead);
+
+    let playerContainer = document.createElement('div');
+    playerContainer.setAttribute('id', 'playerContainer');
+    playerContainer.setAttribute('class', 'player__container');
+    playerTable.appendChild(playerContainer);
 
     for (let index = 0; index < numberOfPlayer; index++) {
-      let playerTableRow = document.createElement('tr');
-      playerTableRow.setAttribute('id', `playerTableRow`);
-      playerTableRow.setAttribute('class', 'player__table__row');
-
-      let cell = document.createElement('td');
-      cell.setAttribute('id', `player-${index}`);
-      cell.setAttribute('class', 'player__data');
+      let playerData = document.createElement('div');
+      playerData.setAttribute('id', `player-${index + 1}`);
+      playerData.setAttribute('class', 'player__data');
 
       let playerName = document.createElement('span');
       playerName.setAttribute('class', 'player__name');
@@ -183,6 +180,7 @@ class JeopardyGame {
       inputPlayerName.setAttribute('class', 'player__name__input');
       playerName.appendChild(inputPlayerName);
 
+      // add score to score array
       if (inputPlayerName.value != '')
         score.push({
           score: 0,
@@ -197,31 +195,34 @@ class JeopardyGame {
 
       let playerScore = document.createElement('div');
       playerScore.setAttribute('class', 'player__score');
-      let decrease = document.createElement('span');
-      decrease.setAttribute('class', `decrease__${index}`);
-      decrease.innerHTML = '-';
 
       let scoreDisplay = document.createElement('h4');
-      scoreDisplay.setAttribute('class', `score__${index}`);
+      scoreDisplay.setAttribute('class', `score__${index + 1}`);
       scoreDisplay.innerHTML = score[index].score;
-      let increase = document.createElement('span');
-      increase.setAttribute('class', `increase__${index}`);
-      increase.innerHTML = '+';
 
+      /**
+       * Create increase and decrease button for each player.
+       */
+      let decrease = document.createElement('span');
+      decrease.setAttribute('class', `decrease__${index + 1}`);
+      decrease.innerHTML = '-';
       decrease.addEventListener('click', () => {
         if (score[index].score > 0) {
           score[index].score -= 100;
           score[index].playerName =
-            inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
+            inputPlayerName.value == '' ? `Player ${index + 1}` : inputPlayerName.value;
           scoreDisplay.innerHTML = score[index].score;
         }
       });
 
+      let increase = document.createElement('span');
+      increase.setAttribute('class', `increase__${index + 1}`);
+      increase.innerHTML = '+';
       increase.addEventListener('click', () => {
         if (score[index].score < 9000) {
           score[index].score += 100;
           score[index].playerName =
-            inputPlayerName.value == '' ? `Player ${index}` : inputPlayerName.value;
+            inputPlayerName.value == '' ? `Player ${index + 1}` : inputPlayerName.value;
           scoreDisplay.innerHTML = score[index].score;
         }
       });
@@ -229,21 +230,25 @@ class JeopardyGame {
       playerScore.appendChild(decrease);
       playerScore.appendChild(scoreDisplay);
       playerScore.appendChild(increase);
-
-      cell.appendChild(playerName);
-      cell.appendChild(playerScore);
-
-      playerTableRow.appendChild(cell);
-      playerTable.appendChild(playerTableRow);
+      playerData.appendChild(playerName);
+      playerData.appendChild(playerScore);
+      playerContainer.appendChild(playerData);
     }
 
     containerTable.appendChild(table);
     containerTable.appendChild(playerTable);
 
     //create control board
-    let controlBoard = document.createElement('div');
-    controlBoard.setAttribute('id', 'controlBoard');
-    controlBoard.setAttribute('class', 'control__board');
+    let boardHeader = document.createElement('div');
+    boardHeader.setAttribute('id', 'controlBoard');
+    boardHeader.setAttribute('class', 'control__board');
+
+    /**
+     * Create reset and finish button.
+     */
+    let buttonGroup = document.createElement('div');
+    buttonGroup.setAttribute('id', 'buttonGroup');
+    buttonGroup.setAttribute('class', 'button__group');
 
     let resetBtn = document.createElement('button');
     resetBtn.setAttribute('id', 'resetBtn');
@@ -299,22 +304,24 @@ class JeopardyGame {
       winnerModal.appendChild(winnerModalBtn);
       document.body.appendChild(winnerModal);
     });
-    playerTable.appendChild(finishedBtn);
+    buttonGroup.appendChild(finishedBtn);
+    buttonGroup.appendChild(resetBtn);
+    playerTable.appendChild(buttonGroup);
 
     let boardTitle = document.createElement('h1');
     boardTitle.setAttribute('id', 'boardTitle');
     boardTitle.setAttribute('class', 'board__title');
     boardTitle.innerHTML = 'Jeopardy!';
 
-    controlBoard.appendChild(boardTitle);
-    controlBoard.appendChild(resetBtn);
+    boardHeader.appendChild(boardTitle);
+    // controlBoard.appendChild(resetBtn);
 
     //container
     let container = document.createElement('div');
     container.setAttribute('id', 'container');
     container.setAttribute('class', 'container');
 
-    container.appendChild(controlBoard);
+    container.appendChild(boardHeader);
     container.appendChild(containerTable);
     board.appendChild(container);
     document.body.appendChild(board);
