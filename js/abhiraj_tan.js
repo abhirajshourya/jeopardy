@@ -179,7 +179,7 @@ class JeopardyGame {
       playerName.setAttribute('class', 'player__name');
 
       let inputPlayerName = document.createElement('input');
-      inputPlayerName.setAttribute('placeholder', 'Enter Name');
+      inputPlayerName.setAttribute('placeholder', `Player ${index + 1}`);
       inputPlayerName.setAttribute('class', 'player__name__input');
       playerName.appendChild(inputPlayerName);
 
@@ -191,7 +191,7 @@ class JeopardyGame {
       else {
         score.push({
           score: 0,
-          playerName: `Player ${index}`,
+          playerName: `Player ${index + 1}`,
         });
       }
 
@@ -265,12 +265,39 @@ class JeopardyGame {
     finishedBtn.setAttribute('class', 'finish__btn');
     finishedBtn.innerHTML = 'FINISH';
     finishedBtn.addEventListener('click', () => {
-      if (confirm('Are you sure to finish this game?')) {
-        let winPlayer = {
-          ...this.checkWinner(),
-        };
-        this.winner.push(winPlayer);
-      }
+      let winPlayer = {
+        ...this.checkWinner(),
+      };
+      this.winner.push(winPlayer);
+      // show winner modal
+      let winnerModal = document.createElement('div');
+      winnerModal.setAttribute('id', 'winnerModal');
+      winnerModal.setAttribute('class', 'winner__modal');
+
+      let winnerModalContent = document.createElement('p');
+      winnerModalContent.setAttribute('id', 'winnerModalContent');
+      winnerModalContent.setAttribute('class', 'winner__modal__content');
+      winnerModalContent.innerHTML = `The winner is ${winPlayer.playerName} with $${winPlayer.score}!`;
+
+      let winnerModalBtn = document.createElement('button');
+      winnerModalBtn.setAttribute('id', 'winnerModalBtn');
+      winnerModalBtn.setAttribute('class', 'winner__modal__btn');
+      winnerModalBtn.innerHTML = 'Play Again';
+
+      //reset score
+      score.forEach((element) => {
+        element.score = 0;
+        element.playerName = '';
+      });
+
+      winnerModalBtn.addEventListener('click', () => {
+        document.body.innerHTML = '';
+        this.welcomePage();
+      });
+
+      winnerModal.appendChild(winnerModalContent);
+      winnerModal.appendChild(winnerModalBtn);
+      document.body.appendChild(winnerModal);
     });
     playerTable.appendChild(finishedBtn);
 
