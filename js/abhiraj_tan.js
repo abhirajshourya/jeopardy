@@ -289,13 +289,12 @@ class JeopardyGame {
       winnerModalBtn.setAttribute('class', 'winner__modal__btn');
       winnerModalBtn.innerHTML = 'PLAY AGAIN';
 
-      //reset score
-      score.forEach((element) => {
-        element.score = 0;
-        element.playerName = '';
-      });
-
       winnerModalBtn.addEventListener('click', () => {
+      //reset score
+        score.forEach((element) => {
+          element.score = 0;
+          element.playerName = '';
+        });
         document.body.innerHTML = '';
         this.welcomePage();
       });
@@ -303,6 +302,14 @@ class JeopardyGame {
       winnerModalContent.appendChild(winnerModalBtn);
       winnerModal.appendChild(winnerModalContent);
       board.appendChild(winnerModal);
+
+      winnerModalContent.addEventListener('click', (e) => {
+        e.stopPropagation();
+      })
+
+      winnerModal.addEventListener('click', (e) => {
+        winnerModal.style.display = 'none';
+      })
     });
 
     buttonGroup.appendChild(finishedBtn);
