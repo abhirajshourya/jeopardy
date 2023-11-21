@@ -122,8 +122,6 @@ class JeopardyGame {
     table.appendChild(tableHeaders);
 
     for (let i = 1; i <= this.values.length; i++) {
-      // Save loaded api call data in local storage. To avoid multiple api calls.
-
       let tableRow = document.createElement('tr');
       tableRow.setAttribute('id', `tableRow-${i}`);
       tableRow.setAttribute('class', 'table__row');
