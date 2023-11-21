@@ -282,12 +282,12 @@ class JeopardyGame {
       let winnerModalContent = document.createElement('p');
       winnerModalContent.setAttribute('id', 'winnerModalContent');
       winnerModalContent.setAttribute('class', 'winner__modal__content');
-      winnerModalContent.innerHTML = `The winner is ${winPlayer.playerName} with $${winPlayer.score}!`;
+      winnerModalContent.innerHTML = `<p>The winner is <span>${winPlayer.playerName}</span> with <span>$${winPlayer.score}</span></p>`;
 
       let winnerModalBtn = document.createElement('button');
       winnerModalBtn.setAttribute('id', 'winnerModalBtn');
       winnerModalBtn.setAttribute('class', 'winner__modal__btn');
-      winnerModalBtn.innerHTML = 'Play Again';
+      winnerModalBtn.innerHTML = 'PLAY AGAIN';
 
       //reset score
       score.forEach((element) => {
@@ -300,10 +300,11 @@ class JeopardyGame {
         this.welcomePage();
       });
 
+      winnerModalContent.appendChild(winnerModalBtn);
       winnerModal.appendChild(winnerModalContent);
-      winnerModal.appendChild(winnerModalBtn);
-      document.body.appendChild(winnerModal);
+      board.appendChild(winnerModal);
     });
+
     buttonGroup.appendChild(finishedBtn);
     buttonGroup.appendChild(resetBtn);
     playerTable.appendChild(buttonGroup);
