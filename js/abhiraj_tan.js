@@ -127,7 +127,7 @@ class JeopardyGame {
       let tableRow = document.createElement('tr');
       tableRow.setAttribute('id', `tableRow-${i}`);
       tableRow.setAttribute('class', 'table__row');
-      for (let j = 1; j <= 6; j++) {
+      for (let j = 1; j <= this.categories.length; j++) {
         //load clue
         let clue = await fetch(
           `https://jservice.io/api/clues?category=${this.categories[j - 1].id}&value=${
