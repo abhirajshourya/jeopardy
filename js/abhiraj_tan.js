@@ -3,11 +3,17 @@
  * For INFO-6122-(02)-23F in Fanshawe College, MAP program.
  */
 
+/**
+ * *************************************************************
+ * Class for Jeopardy Game.
+ * *************************************************************
+ */
 class JeopardyGame {
   questions = [];
+  clues = {};
   categories = [];
   score = [];
-  winner = [];
+  winners = [];
   values = [100, 200, 300, 400, 500];
   /**
    * This is because all offsets do not have questions for all values and it takes a lot of
@@ -18,56 +24,59 @@ class JeopardyGame {
   constructor() {
     this.questions = [];
     this.categories = [];
+    this.clues = {};
     this.score = [];
-    this.winner = [];
+    this.winners = [];
   }
 
+  /**
+   * *************************************************************
+   * Function to create the Welcome Page.
+   * *************************************************************
+   */
   welcomePage() {
-    let welcomePage = document.createElement('div');
-    welcomePage.setAttribute('id', 'welcomePage');
-    welcomePage.setAttribute('class', 'welcomePage');
+    /**
+     * Remove all elements from the body.
+     */
+    document.body.innerHTML = '';
 
-    let welcomePageTitle = document.createElement('h1');
-    welcomePageTitle.setAttribute('id', 'welcomePageTitle');
-    welcomePageTitle.setAttribute('class', 'welcomePage__title');
+    /**
+     * Create welcome page and set Title and Logo.
+     */
+    let welcomePage = createElement('div', 'welcomePage');
+    let welcomePageTitle = createElement('h1', 'welcomePageTitle');
     welcomePageTitle.innerHTML = `Welcome to Jeopardy!`;
-
-    let welcomePageImg = document.createElement('img');
-    welcomePageImg.setAttribute('id', 'welcomePageImg');
-    welcomePageImg.setAttribute('class', 'welcomePage__img');
+    let welcomePageImg = createElement('img', 'welcomePageImg');
     welcomePageImg.src = './assets/imgs/logo-jeopardy.jpg';
 
-    let inputGroup = document.createElement('div');
-    inputGroup.setAttribute('class', 'input__group');
-
-    let label = document.createElement('label');
-    label.setAttribute('for', 'selection');
-    label.setAttribute('class', 'label__input');
-    label.innerHTML = 'Select Number of Players: ';
-    let selection = document.createElement('select');
-    selection.setAttribute('id', 'selection');
-    selection.setAttribute('name', 'numberOfPlayer');
-    selection.innerHTML = `
+    /**
+     * Create input group for player selection.
+     */
+    let inputGroup = createElement('div', 'inputGroup');
+    let playerSelectLabel = createLabel('Select Number of Players: ', 'playerSelect');
+    let playerSelectInput = createInput('select', 'playerSelect');
+    playerSelectInput.innerHTML = `
       <option value="1">1</option>
       <option selected value="2">2</option>
       <option value="3">3</option>
       <option value="4">4</option>
       <option value="5">5</option>
     `;
-    inputGroup.appendChild(label);
-    inputGroup.appendChild(selection);
+    inputGroup.appendChild(playerSelectLabel);
+    inputGroup.appendChild(playerSelectInput);
 
-    let welcomePageButton = document.createElement('button');
-    welcomePageButton.setAttribute('id', 'welcomePageButton');
-    welcomePageButton.setAttribute('class', 'welcomePage__button');
+    /**
+     * Create start game button.
+     */
+    let welcomePageButton = createElement('button', 'welcomePageButton');
     welcomePageButton.innerHTML = `Start Game`;
     welcomePageButton.addEventListener('click', () => {
-      //clear body and load board
-      let numberOfPlayer = selection.value;
-      document.body.innerHTML = '';
-      this.createBoard(numberOfPlayer, this.score);
+      this.startGame(playerSelectInput.value, this.score);
     });
 
+    /**
+     * Append all elements to the body.
+     */
     welcomePage.appendChild(welcomePageTitle);
     welcomePage.appendChild(welcomePageImg);
     welcomePage.appendChild(inputGroup);
@@ -75,75 +84,75 @@ class JeopardyGame {
     document.body.appendChild(welcomePage);
   }
 
+  /**
+   * *************************************************************
+   * Function to update the score of the player.
+   * @param {int} numberOfPlayer Number of players
+   * @param {int} score Score of each player
+   * *************************************************************
+   */
   async createBoard(numberOfPlayer, score) {
-    //loading screen
-    let loadingPage = document.createElement('div');
-    loadingPage.setAttribute('id', 'loadingPage');
-    loadingPage.setAttribute('class', 'loading__Page');
-    document.body.appendChild(loadingPage);
-    let loading = document.createElement('div');
-    loading.setAttribute('id', 'loading');
-    loading.setAttribute('class', 'loading');
+    /**
+     * Create loading page.
+     */
+    let loadingPage = createElement('div', 'loadingPage');
+    let loading = createElement('div', 'loading');
     loadingPage.appendChild(loading);
+    document.body.appendChild(loadingPage);
 
-    //load categories
-    this.categories = await fetch(
-      `https://jservice.io/api/categories?count=6&offset=${this.workingOffsets[getRandomInt(4)]}`
-    ).then((response) => response.json());
+    /**
+     * Call the APIs to load the game.
+     */
+    await this.getJeopardyGame();
 
-    let board = document.createElement('div');
-    board.setAttribute('id', 'board');
-    board.setAttribute('class', 'board');
+    /**
+     * *************************************************************
+     * Create board, container, table, and table headers.
+     * *************************************************************
+     */
+    let board = createElement('div', 'board');
+    let containerTable = createElement('div', 'container__table');
+    let table = createElement('table', 'table');
+    let tableHeaders = createElement('tr', 'table__headers');
 
-    // create container of game board and players
-    let containerTable = document.createElement('div');
-    containerTable.setAttribute('id', 'containerTable');
-    containerTable.setAttribute('class', 'container__table');
-
-    let table = document.createElement('table');
-    table.setAttribute('id', 'table');
-    table.setAttribute('class', 'table');
-
-    //create table headers
-    let tableHeaders = document.createElement('tr');
-    tableHeaders.setAttribute('id', `tableHeaders`);
-    tableHeaders.setAttribute('class', 'table__headers');
-    for (let i = 1; i <= 6; i++) {
-      let tableHead = document.createElement('th');
-      tableHead.setAttribute('id', `tableHead-${i}`);
-      tableHead.setAttribute('class', 'table__head');
+    /**
+     * Create table headers for each category.
+     */
+    for (let i = 1; i <= this.categories.length; i++) {
+      let tableHead = createElement('th', 'table__head');
       tableHead.innerHTML = `${this.categories[i - 1].title}`;
       tableHeaders.appendChild(tableHead);
     }
     table.appendChild(tableHeaders);
 
+    /**
+     * Create table rows for each value.
+     */
     for (let i = 1; i <= this.values.length; i++) {
-      let tableRow = document.createElement('tr');
-      tableRow.setAttribute('id', `tableRow-${i}`);
-      tableRow.setAttribute('class', 'table__row');
-      for (let j = 1; j <= this.categories.length; j++) {
-        //load clue
-        let clue = await fetch(
-          `https://jservice.io/api/clues?category=${this.categories[j - 1].id}&value=${
-            this.values[i - 1]
-          }`
-        ).then((response) => response.json());
+      let tableRow = createElement('tr', 'table__row');
 
+      /**
+       * Create table cells for each question in each category.
+       */
+      for (let j = 1; j <= this.categories.length; j++) {
+        /**
+         * Retrieve the question from the clues array of the category and value.
+         */
+        let clueFromCategory = this.clues[this.categories[j - 1].id][i - 1];
         let question = new JeopardyQuestion(
-          clue[0].question,
-          clue[0].answer,
-          clue[0].value,
-          this.categories[j - 1].title
+          clueFromCategory.question,
+          clueFromCategory.answer,
+          clueFromCategory.value,
+          clueFromCategory.category
         );
 
-        this.questions.push(question);
-
-        let cell = document.createElement('td');
-        cell.setAttribute('id', `tableData-${i}-${j}`);
-        cell.setAttribute('class', 'table__data');
+        /**
+         * Create table cell.
+         */
+        let cell = createElement('td', 'table__cell');
         cell.innerHTML = `$${this.values[i - 1]}`;
         cell.addEventListener('click', () => {
-          let modal = question.createQuestionModal(cell, this.updateScore);
+          let modal = question.createQuestionModal(cell);
           board.appendChild(modal);
         });
         tableRow.appendChild(cell);
@@ -151,44 +160,46 @@ class JeopardyGame {
       table.appendChild(tableRow);
     }
 
-    //create player table
-    let playerTable = document.createElement('div');
-    playerTable.setAttribute('id', 'playerTable');
-    playerTable.setAttribute('class', 'player__table');
+    /**
+     * *************************************************************
+     * Create player table.
+     * *************************************************************
+     */
+    let playerTable = createElement('div', 'player__table');
+    let playerTableHead = createElement('h3', 'player__table__head');
+    let playerContainer = createElement('div', 'player__container');
 
-    let playerTableHead = document.createElement('h1');
-    playerTableHead.setAttribute('id', `playerTableHead`);
-    playerTableHead.setAttribute('class', 'player__table__head');
     playerTableHead.innerHTML = `PLAYERS`;
-    playerTable.appendChild(playerTableHead);
 
-    let playerContainer = document.createElement('div');
-    playerContainer.setAttribute('id', 'playerContainer');
-    playerContainer.setAttribute('class', 'player__container');
+    playerTable.appendChild(playerTableHead);
     playerTable.appendChild(playerContainer);
 
+    /**
+     * Create player data for each player.
+     */
     for (let index = 0; index < numberOfPlayer; index++) {
-      let playerData = document.createElement('div');
-      playerData.setAttribute('id', `player-${index + 1}`);
-      playerData.setAttribute('class', 'player__data');
+      /**
+       * Create player name and score.
+       */
+      let playerData = createElement('div', 'player__data');
+      let playerName = createElement('span', 'player__name');
+      let playerNameInput = document.createElement('input');
 
-      let playerName = document.createElement('span');
-      playerName.setAttribute('class', 'player__name');
-
-      let inputPlayerName = document.createElement('input');
-      inputPlayerName.setAttribute('placeholder', `Player ${index + 1}`);
-      inputPlayerName.setAttribute('class', 'player__name__input');
-      inputPlayerName.addEventListener('change', () => {
+      /**
+       * Set player name and score.
+       */
+      playerNameInput.setAttribute('placeholder', `Player ${index + 1}`);
+      playerNameInput.setAttribute('class', 'player__name__input');
+      playerNameInput.addEventListener('change', () => {
         score[index].playerName =
-          inputPlayerName.value == '' ? `Player ${index + 1}` : inputPlayerName.value;
+          playerNameInput.value == '' ? `Player ${index + 1}` : playerNameInput.value;
       });
-      playerName.appendChild(inputPlayerName);
+      playerName.appendChild(playerNameInput);
 
-      // add score to score array
-      if (inputPlayerName.value != '')
+      if (playerNameInput.value != '')
         score.push({
           score: 0,
-          playerName: inputPlayerName.value,
+          playerName: playerNameInput.value,
         });
       else {
         score.push({
@@ -197,40 +208,42 @@ class JeopardyGame {
         });
       }
 
-      let playerScore = document.createElement('div');
-      playerScore.setAttribute('class', 'player__score');
-
+      /**
+       * Create Score Display, Increase, and Decrease button. Add event listener to each button.
+       */
       let scoreDisplay = document.createElement('h4');
+      let decrease = document.createElement('span');
+      let increase = document.createElement('span');
+
       scoreDisplay.setAttribute('class', `score__${index + 1}`);
       scoreDisplay.innerHTML = score[index].score;
 
-      /**
-       * Create increase and decrease button for each player.
-       */
-      let decrease = document.createElement('span');
       decrease.setAttribute('class', `decrease__${index + 1}`);
       decrease.innerHTML = '-';
       decrease.addEventListener('click', () => {
         if (score[index].score > 0) {
           score[index].score -= 100;
           score[index].playerName =
-            inputPlayerName.value == '' ? `Player ${index + 1}` : inputPlayerName.value;
+            playerNameInput.value == '' ? `Player ${index + 1}` : playerNameInput.value;
           scoreDisplay.innerHTML = score[index].score;
         }
       });
 
-      let increase = document.createElement('span');
       increase.setAttribute('class', `increase__${index + 1}`);
       increase.innerHTML = '+';
       increase.addEventListener('click', () => {
         if (score[index].score < 9000) {
           score[index].score += 100;
           score[index].playerName =
-            inputPlayerName.value == '' ? `Player ${index + 1}` : inputPlayerName.value;
+            playerNameInput.value == '' ? `Player ${index + 1}` : playerNameInput.value;
           scoreDisplay.innerHTML = score[index].score;
         }
       });
 
+      /**
+       * Append all elements to the player data and finally to the player container.
+       */
+      let playerScore = createElement('span', 'player__score');
       playerScore.appendChild(decrease);
       playerScore.appendChild(scoreDisplay);
       playerScore.appendChild(increase);
@@ -239,74 +252,56 @@ class JeopardyGame {
       playerContainer.appendChild(playerData);
     }
 
-    containerTable.appendChild(table);
-    containerTable.appendChild(playerTable);
+    /**
+     * *************************************************************
+     * Create reset and finish button.
+     * *************************************************************
+     */
+    let buttonGroup = createElement('div', 'button__group');
+    let resetBtn = createElement('button', 'reset__btn');
+    let finishedBtn = createElement('button', 'finish__btn');
 
-    //create control board
-    let boardHeader = document.createElement('div');
-    boardHeader.setAttribute('id', 'controlBoard');
-    boardHeader.setAttribute('class', 'control__board');
+    resetBtn.innerHTML = 'RESET';
+    finishedBtn.innerHTML = 'FINISH';
 
     /**
-     * Create reset and finish button.
+     * Add event listener to reset button to reset the score and start the game again.
      */
-    let buttonGroup = document.createElement('div');
-    buttonGroup.setAttribute('id', 'buttonGroup');
-    buttonGroup.setAttribute('class', 'button__group');
-
-    let resetBtn = document.createElement('button');
-    resetBtn.setAttribute('id', 'resetBtn');
-    resetBtn.setAttribute('class', 'reset__btn');
-    resetBtn.innerHTML = 'RESET';
     resetBtn.addEventListener('click', () => {
-      if (confirm('Are you sure to reset this game?')) {
-        document.body.innerHTML = '';
-        score.forEach((element) => {
-          element.score = 0;
-          element.playerName = '';
-        });
-        this.createBoard(numberOfPlayer, score);
-      }
+      document.body.innerHTML = '';
+      score.forEach((element) => {
+        element.score = 0;
+        element.playerName = '';
+      });
+      this.createBoard(numberOfPlayer, score);
     });
 
-    let finishedBtn = document.createElement('button');
-    finishedBtn.setAttribute('id', 'finishBtn');
-    finishedBtn.setAttribute('class', 'finish__btn');
-    finishedBtn.innerHTML = 'FINISH';
+    /**
+     * Add event listener to finish button to show the winner and reset the game.
+     */
     finishedBtn.addEventListener('click', () => {
       let winPlayer = {
         ...this.checkWinner(),
       };
-      this.winner.push(winPlayer);
-      // show winner modal
-      let winnerModal = document.createElement('div');
-      winnerModal.setAttribute('id', 'winnerModal');
-      winnerModal.setAttribute('class', 'winner__modal');
+      this.winners.push(winPlayer);
 
-      let winnerModalContent = document.createElement('p');
-      winnerModalContent.setAttribute('id', 'winnerModalContent');
-      winnerModalContent.setAttribute('class', 'winner__modal__content');
-      winnerModalContent.innerHTML = `<p>The winner is <span>${winPlayer.playerName}</span> with <span>$${winPlayer.score}</span></p>`;
+      /**
+       * Create winner modal.
+       */
+      let winnerModal = createElement('div', 'winner__modal');
+      let winnerModalContent = createElement('div', 'winner__modal__content');
+      let winnerModalBtn = createElement('button', 'winner__modal__btn');
 
-      let winnerModalBtn = document.createElement('button');
-      winnerModalBtn.setAttribute('id', 'winnerModalBtn');
-      winnerModalBtn.setAttribute('class', 'winner__modal__btn');
       winnerModalBtn.innerHTML = 'PLAY AGAIN';
-
       winnerModalBtn.addEventListener('click', () => {
-        //reset score
         score.forEach((element) => {
           element.score = 0;
           element.playerName = '';
         });
-        document.body.innerHTML = '';
         this.welcomePage();
       });
 
-      winnerModalContent.appendChild(winnerModalBtn);
-      winnerModal.appendChild(winnerModalContent);
-      board.appendChild(winnerModal);
-
+      winnerModalContent.innerHTML = `<p>The winner is <span>${winPlayer.playerName}</span> with <span>$${winPlayer.score}</span></p>`;
       winnerModalContent.addEventListener('click', (e) => {
         e.stopPropagation();
       });
@@ -314,34 +309,59 @@ class JeopardyGame {
       winnerModal.addEventListener('click', (e) => {
         winnerModal.style.display = 'none';
       });
+
+      winnerModalContent.appendChild(winnerModalBtn);
+      winnerModal.appendChild(winnerModalContent);
+      board.appendChild(winnerModal);
     });
+
+    /**
+     * Append all elements to the body.
+     */
 
     buttonGroup.appendChild(finishedBtn);
     buttonGroup.appendChild(resetBtn);
     playerTable.appendChild(buttonGroup);
 
-    let boardTitle = document.createElement('h1');
-    boardTitle.setAttribute('id', 'boardTitle');
-    boardTitle.setAttribute('class', 'board__title');
+    /**
+     * *************************************************************
+     * Create board header, container, and append to the body.
+     * *************************************************************
+     */
+    let boardHeader = createElement('div', 'board__header');
+    let boardTitle = createElement('h1', 'board__title');
     boardTitle.innerHTML = 'Jeopardy!';
-
     boardHeader.appendChild(boardTitle);
-    // controlBoard.appendChild(resetBtn);
 
-    //container
-    let container = document.createElement('div');
-    container.setAttribute('id', 'container');
-    container.setAttribute('class', 'container');
+    let container = createElement('div', 'container');
 
+    containerTable.appendChild(table);
+    containerTable.appendChild(playerTable);
     container.appendChild(boardHeader);
     container.appendChild(containerTable);
     board.appendChild(container);
     document.body.appendChild(board);
 
-    //remove loading
+    /**
+     * Remove loading page.
+     */
     document.body.removeChild(loadingPage);
   }
 
+  /**
+   * This function starts the game.
+   * @param {int} playerNumber Number of players
+   * @param {int} score Score of each player
+   */
+  startGame(playerNumber, score) {
+    document.body.innerHTML = '';
+    this.createBoard(playerNumber, score);
+  }
+
+  /**
+   * This function checks the winner of the game.
+   * @returns the winner of the game.
+   */
   checkWinner() {
     let indexOfWinner = 0;
     let highestScore = this.score[0].score;
@@ -354,15 +374,78 @@ class JeopardyGame {
 
     return this.score[indexOfWinner];
   }
+
+  /**
+   * This function loads the game by calling the APIs.
+   */
+  async getJeopardyGame() {
+    /**
+     * Load categories.
+     */
+    const fetchedCategories = await fetch(
+      `https://jservice.io/api/categories?count=6&offset=${this.workingOffsets[getRandomInt(4)]}`
+    ).then((response) => response.json());
+
+    /**
+     * Load questions for each category.
+     */
+    for (let idx = 0; idx < fetchedCategories.length; idx++) {
+      console.log(' Calling for category ' + fetchedCategories[idx].id);
+      const fetchedClues = await fetch(
+        `https://jservice.io/api/clues?category=${fetchedCategories[idx].id}`
+      ).then((response) => response.json());
+
+      const categoryId = fetchedCategories[idx].id;
+
+      /**
+       * Search questions for each value from clues array.
+       */
+      for (let i = 0; i < this.values.length; i++) {
+        for (let j = 0; j < fetchedClues.length; j++) {
+          if (fetchedClues[j].value == this.values[i]) {
+            this.questions.push(
+              new JeopardyQuestion(
+                fetchedClues[j].question,
+                fetchedClues[j].answer,
+                fetchedClues[j].value,
+                fetchedCategories[idx].id
+              )
+            );
+            break;
+          }
+        }
+      }
+
+      this.clues = {
+        ...this.clues,
+        [categoryId]: this.questions,
+      };
+
+      this.questions = [];
+    }
+    this.categories = fetchedCategories;
+    console.log(this.clues);
+  }
 }
 
+/**
+ * *************************************************************
+ * Class for Jeopardy Question.
+ * *************************************************************
+ */
 class JeopardyQuestion {
   question = '';
   answer = '';
   value = 0; // 100, 200, 300, 400, 500
   category = '';
-  isCorrect = false;
 
+  /**
+   * Constructor for JeopardyQuestion.
+   * @param {string} question Question
+   * @param {string} answer Answer
+   * @param {int} value Value
+   * @param {string} category Category
+   */
   constructor(question, answer, value, category) {
     this.question = question;
     this.answer = answer;
@@ -373,43 +456,26 @@ class JeopardyQuestion {
   /**
    * Function to create the Question Modal.
    */
-  createQuestionModal(cell, updateScore) {
-    let modal = document.createElement('div');
-    modal.setAttribute('id', 'modal');
-    modal.setAttribute('class', 'modal');
+  createQuestionModal(cell) {
+    let modal = createElement('div', 'modal');
+    let modalQuestions = createElement('div', 'modal__questions');
+    let modalHeader = createElement('h1', 'modal__header');
+    let question = createElement('h2', 'question');
+    let answer = createElement('h3', 'answer');
+    let groupBtn = createElement('div', 'group__btn');
+    let answerBtn = createElement('button', 'answer__btn');
+    let cancelBtn = createElement('button', 'cancel__btn');
 
-    let modalQuestions = document.createElement('div');
-    modalQuestions.setAttribute('id', `modalQuestions`);
-    modalQuestions.setAttribute('class', 'modal__questions');
-    let modalHeader = document.createElement('h3');
-    modalHeader.setAttribute('id', `modalHeader`);
-    modalHeader.setAttribute('class', 'modal__header');
     modalHeader.innerHTML = `$${this.value}`;
-    modalQuestions.appendChild(modalHeader);
-    let question = document.createElement('h2');
-    question.setAttribute('id', `question`);
-    question.setAttribute('class', 'question');
     question.innerHTML = this.question;
-    modalQuestions.appendChild(question);
-    let answer = document.createElement('h2');
-    answer.setAttribute('id', `answer`);
-    answer.setAttribute('class', 'answer');
     answer.innerHTML = this.answer;
+    answerBtn.innerHTML = 'Show Answer';
+    cancelBtn.innerHTML = 'Exit Question';
+
+    modalQuestions.appendChild(modalHeader);
+    modalQuestions.appendChild(question);
     modalQuestions.appendChild(answer);
 
-    let groupBtn = document.createElement('div');
-    groupBtn.setAttribute('id', 'groupBtn');
-    groupBtn.setAttribute('class', 'group__btn');
-
-    let answerBtn = document.createElement('button');
-    answerBtn.setAttribute('id', `answerBtn`);
-    answerBtn.setAttribute('class', `answer__btn`);
-    answerBtn.innerHTML = 'Show Answer';
-
-    let cancelBtn = document.createElement('button');
-    cancelBtn.setAttribute('id', `cancelBtn`);
-    cancelBtn.setAttribute('class', `cancel__btn`);
-    cancelBtn.innerHTML = 'Exit Question';
     cancelBtn.addEventListener('click', () => {
       modal.style.display = 'none';
     });
@@ -417,7 +483,6 @@ class JeopardyQuestion {
     groupBtn.appendChild(answerBtn);
     groupBtn.appendChild(cancelBtn);
     modalQuestions.appendChild(groupBtn);
-
     modal.appendChild(modalQuestions);
 
     if (cell.classList.contains('answered__question')) {
@@ -439,6 +504,28 @@ class JeopardyQuestion {
  */
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
+}
+
+function createElement(elType, attName) {
+  let el = document.createElement(elType);
+  el.setAttribute('id', attName);
+  el.setAttribute('class', attName);
+  return el;
+}
+
+function createLabel(labelName, attName) {
+  let label = document.createElement('label');
+  label.setAttribute('for', attName);
+  label.setAttribute('class', attName);
+  label.innerHTML = labelName;
+  return label;
+}
+
+function createInput(inputType, attName) {
+  let input = document.createElement(inputType);
+  input.setAttribute('id', attName);
+  input.setAttribute('name', attName);
+  return input;
 }
 
 /**

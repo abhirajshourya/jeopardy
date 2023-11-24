@@ -21,7 +21,7 @@ body {
   align-items: center;
 }
 
-.welcomePage__title {
+.welcomePageTitle {
   font-size: 48px;
   background: -webkit-linear-gradient(#1535b3, #2fbcdf);
   background-clip: text;
@@ -31,14 +31,14 @@ body {
   font-family: 'Bungee', sans-serif;
 }
 
-.welcomePage__img {
+.welcomePageImg {
   margin: 40px;
   display: block;
   height: 420px;
   border-radius: 2rem;
 }
 
-.input__group {
+.inputGroup {
   /* border: 1px solid #1535b3; */
   border-radius: 0.5rem;
   background-color: #5b5b5b1d;
@@ -49,7 +49,7 @@ body {
     rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-.label__input {
+.playerSelect {
   font-size: 24px;
 }
 
@@ -61,7 +61,7 @@ select {
   font-size: 24px;
 }
 
-.welcomePage__button {
+.welcomePageButton {
   min-width: 175px;
   width: 10%;
   height: 50px;
@@ -76,7 +76,7 @@ select {
     rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-.welcomePage__button:hover {
+.welcomePageButton:hover {
   border: 2px solid #143479;
   color: #143479;
   box-shadow: rgb(0, 38, 72) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
@@ -111,7 +111,7 @@ select {
   display: flex;
 }
 
-.control__board {
+.board__header {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -189,7 +189,7 @@ h1 {
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-.table__data {
+.table__cell {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   border: 2px solid #000;
@@ -202,7 +202,7 @@ h1 {
   font-size: 36px;
 }
 
-.table__data:hover {
+.table__cell:hover {
   border: 2px solid #ffff00;
   opacity: 0.8;
 }
@@ -235,6 +235,7 @@ h1 {
   font-size: 48px;
   color: #ffff00;
   border-bottom: 4px solid #ffff00;
+  width: 100%;
 }
 
 .question {
@@ -309,7 +310,7 @@ h1 {
   color: #000;
 }
 
-.loading__Page {
+.loadingPage {
   display: flex;
   flex-direction: column;
   justify-content: center;
