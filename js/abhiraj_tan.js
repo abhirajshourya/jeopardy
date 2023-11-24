@@ -398,23 +398,42 @@ class JeopardyGame {
       const categoryId = fetchedCategories[idx].id;
 
       /**
+       * Arrays for storing all questions of each value.
+       */
+      let questionsByValue = {};
+
+      /**
        * Search questions for each value from clues array.
        */
       for (let i = 0; i < this.values.length; i++) {
+        questionsByValue[this.values[i]] = [];
+
         for (let j = 0; j < fetchedClues.length; j++) {
           if (fetchedClues[j].value == this.values[i]) {
-            this.questions.push(
+            questionsByValue[this.values[i]].push(
               new JeopardyQuestion(
                 fetchedClues[j].question,
                 fetchedClues[j].answer,
                 fetchedClues[j].value,
-                fetchedCategories[idx].id
+                fetchedCategories[idx].title
               )
             );
-            break;
           }
         }
       }
+
+      console.log(questionsByValue);
+
+      /**
+       * Select a random question for each value from questionsByValue array and push to questions array.
+       */
+      for (let i = 0; i < this.values.length; i++) {
+        let randomQuestion =
+          questionsByValue[this.values[i]][getRandomInt(questionsByValue[this.values[i]].length)];
+        this.questions.push(randomQuestion);
+      }
+
+      console.log(this.questions);
 
       this.clues = {
         ...this.clues,
