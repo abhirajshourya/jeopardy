@@ -26,7 +26,11 @@ class JeopardyGame {
     this.categories = [];
     this.clues = {};
     this.score = [];
-    this.winners = [];
+    if (readJsonFromCookie('winners') != null) {
+      this.winners = readJsonFromCookie('winners');
+    } else {
+      this.winners = [];
+    }
   }
 
   /**
@@ -284,6 +288,8 @@ class JeopardyGame {
         ...this.checkWinner(),
       };
       this.winners.push(winPlayer);
+      saveJsonToCookie('winners', this.winners, 90);
+      console.log(this.winners);
 
       /**
        * Create winner modal.
@@ -539,6 +545,27 @@ function createInput(inputType, attName) {
   input.setAttribute('id', attName);
   input.setAttribute('name', attName);
   return input;
+}
+
+function saveJsonToCookie(name, json, daysToExpire) {
+  const jsonString = JSON.stringify(json);
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + daysToExpire);
+  document.cookie = `${name}=${encodeURIComponent(
+    jsonString
+  )};expires=${expirationDate.toUTCString()};path=/`;
+}
+
+function readJsonFromCookie(name) {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.startsWith(name + '=')) {
+      const jsonString = decodeURIComponent(cookie.substring(name.length + 1));
+      return JSON.parse(jsonString);
+    }
+  }
+  return null;
 }
 
 /**
