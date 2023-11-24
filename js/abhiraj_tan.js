@@ -288,6 +288,17 @@ class JeopardyGame {
         ...this.checkWinner(),
       };
       this.winners.push(winPlayer);
+      
+      /**
+       * Sort the winners array by score. The winner is the first element of the array.
+       */
+      this.winners.sort((a, b) => {
+        return b.score - a.score;
+      });
+
+      /**
+       * Save the winners array to the cookie.
+       */
       saveJsonToCookie('winners', this.winners, 90);
       console.log(this.winners);
 
