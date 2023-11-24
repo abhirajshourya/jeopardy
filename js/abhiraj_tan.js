@@ -390,7 +390,6 @@ class JeopardyGame {
      * Load questions for each category.
      */
     for (let idx = 0; idx < fetchedCategories.length; idx++) {
-      console.log(' Calling for category ' + fetchedCategories[idx].id);
       const fetchedClues = await fetch(
         `https://jservice.io/api/clues?category=${fetchedCategories[idx].id}`
       ).then((response) => response.json());
@@ -422,8 +421,6 @@ class JeopardyGame {
         }
       }
 
-      console.log(questionsByValue);
-
       /**
        * Select a random question for each value from questionsByValue array and push to questions array.
        */
@@ -433,8 +430,6 @@ class JeopardyGame {
         this.questions.push(randomQuestion);
       }
 
-      console.log(this.questions);
-
       this.clues = {
         ...this.clues,
         [categoryId]: this.questions,
@@ -443,7 +438,6 @@ class JeopardyGame {
       this.questions = [];
     }
     this.categories = fetchedCategories;
-    console.log(this.clues);
   }
 }
 
