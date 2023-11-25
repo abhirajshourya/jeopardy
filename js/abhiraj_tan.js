@@ -306,7 +306,7 @@ class JeopardyGame {
       /**
        * Save the winners array to the cookie.
        */
-      saveJsonToCookie('winners', this.winners, 90);
+      saveJsonToCookie('high_scores', this.winners, 90);
       console.log(this.winners);
 
       /**
