@@ -347,7 +347,7 @@ class JeopardyGame {
       });
 
       winnerModal.addEventListener('click', (e) => {
-        winnerModal.style.display = 'none';
+        winnerModal.remove();
       });
 
       btnGroup.appendChild(playAgainBtn);
@@ -574,7 +574,7 @@ class JeopardyQuestion {
     modalQuestions.appendChild(answer);
 
     cancelBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
+      modal.remove();
     });
 
     groupBtn.appendChild(answerBtn);
