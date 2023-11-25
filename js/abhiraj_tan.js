@@ -351,6 +351,10 @@ class JeopardyGame {
      */
     exitBtn.addEventListener('click', () => {
       document.body.innerHTML = '';
+      score.forEach((element) => {
+        element.score = 0;
+        element.playerName = '';
+      });
       this.welcomePage();
     });
 
