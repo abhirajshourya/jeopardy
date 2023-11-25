@@ -314,16 +314,21 @@ class JeopardyGame {
        */
       let winnerModal = createElement('div', 'winner__modal');
       let winnerModalContent = createElement('div', 'winner__modal__content');
-      let winnerModalBtn = createElement('button', 'winner__modal__btn');
+      let playAgainBtn = createElement('button', 'winner__modal__btn');
+      let checkLeaderBoardBtn = createElement('button', 'winner__modal__btn');
+      let btnGroup = createElement('div', 'winner__modal__btn__group');
 
-      winnerModalBtn.innerHTML = 'PLAY AGAIN';
-      winnerModalBtn.addEventListener('click', () => {
+      playAgainBtn.innerHTML = 'PLAY AGAIN';
+      playAgainBtn.addEventListener('click', () => {
         score.forEach((element) => {
           element.score = 0;
           element.playerName = '';
         });
         this.welcomePage();
       });
+
+      let checkLeaderBoardIcon = createIconElement('leaderboard');
+      checkLeaderBoardBtn.innerHTML = checkLeaderBoardIcon.outerHTML;
 
       winnerModalContent.innerHTML = `<p>The winner is <span>${winPlayer.playerName}</span> with <span>$${winPlayer.score}</span></p>`;
       winnerModalContent.addEventListener('click', (e) => {
@@ -334,7 +339,9 @@ class JeopardyGame {
         winnerModal.style.display = 'none';
       });
 
-      winnerModalContent.appendChild(winnerModalBtn);
+      btnGroup.appendChild(playAgainBtn);
+      btnGroup.appendChild(checkLeaderBoardBtn);
+      winnerModalContent.appendChild(btnGroup);
       winnerModal.appendChild(winnerModalContent);
       board.appendChild(winnerModal);
     });
