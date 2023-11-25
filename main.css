@@ -554,16 +554,20 @@ h1 {
   width: fit-content;
 }
 
-.winner___list{
-}
-
 .winner__item{
-  margin: auto;
+  position: relative;
+  margin: 10px auto;
   list-style-type: none;
   width: 50%;
   text-align: start;
   font-size: 24px;
   color: rgb(224, 247, 111);
+}
+
+.winner__item span{
+  width: 20%;
+  position: absolute;
+  right: 20px;
 }
 
 .close{

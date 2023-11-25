@@ -291,9 +291,12 @@ class JeopardyGame {
      * Add event listener to finish button to show the winner and reset the game.
      */
     finishedBtn.addEventListener('click', () => {
+      let date = new Date();
       let winPlayer = {
         ...this.checkWinner(),
+        time: `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`,
       };
+
       this.winners.push(winPlayer);
 
       /**
@@ -307,7 +310,6 @@ class JeopardyGame {
        * Save the winners array to the cookie.
        */
       saveJsonToCookie('high_scores', this.winners, 90);
-      console.log(this.winners);
 
       /**
        * Create winner modal.
@@ -335,7 +337,6 @@ class JeopardyGame {
        */
 
       checkLeaderBoardBtn.addEventListener('click', () => {
-        console.log(readJsonFromCookie('high_scores'));
         let historyModal = this.showWinnerHistoryBoard(readJsonFromCookie('high_scores'));
         board.appendChild(historyModal);
       })
@@ -439,7 +440,7 @@ class JeopardyGame {
     let index = 1;
     winners.forEach(winner => {
       let winnerItem = createElement('li', 'winner__item');
-      winnerItem.innerHTML = `${index}. ${winner.playerName}, ${winner.score}`;
+      winnerItem.innerHTML = `${index}. ${winner.playerName}, ${winner.score} <span>${winner.time}</span>`;
       winnerList.appendChild(winnerItem);
       index++;
     });
