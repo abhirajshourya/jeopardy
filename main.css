@@ -140,9 +140,21 @@ select {
 }
 
 .reset__btn {
-  background-color: rgba(255, 93, 93, 0.661);
-  border: 2px solid rgba(255, 93, 93, 0.661);
+  background-color: rgba(255, 255, 255, 0.661);
+  border: 2px solid rgba(255, 255, 255, 0.661);
   color: #ccc;
+}
+
+.exit__btn {
+  background-color: rgba(223, 76, 76, 0.661);
+  border: 2px solid rgba(223, 40, 40, 0.661);
+  color: #ccc;
+}
+
+.icon {
+  display: block;
+  width: 25px;
+  height: 25px;
 }
 
 .finish__btn {

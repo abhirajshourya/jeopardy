@@ -262,11 +262,18 @@ class JeopardyGame {
      * *************************************************************
      */
     let buttonGroup = createElement('div', 'button__group');
-    let resetBtn = createElement('button', 'reset__btn');
     let finishedBtn = createElement('button', 'finish__btn');
+    let resetBtn = createElement('button', 'reset__btn');
+    let exitBtn = createElement('button', 'exit__btn');
 
-    resetBtn.innerHTML = 'RESET';
-    finishedBtn.innerHTML = 'FINISH';
+    let finishedIcon = createIconElement('crown');
+    finishedBtn.innerHTML = finishedIcon.outerHTML;
+
+    let resetIcon = createIconElement('refresh');
+    resetBtn.innerHTML = resetIcon.outerHTML;
+
+    let exitIcon = createIconElement('exit');
+    exitBtn.innerHTML = exitIcon.outerHTML;
 
     /**
      * Add event listener to reset button to reset the score and start the game again.
@@ -275,7 +282,7 @@ class JeopardyGame {
       document.body.innerHTML = '';
       score.forEach((element) => {
         element.score = 0;
-        element.playerName = '';
+        element.playerName = 'Player';
       });
       this.createBoard(numberOfPlayer, score);
     });
@@ -288,7 +295,7 @@ class JeopardyGame {
         ...this.checkWinner(),
       };
       this.winners.push(winPlayer);
-      
+
       /**
        * Sort the winners array by score. The winner is the first element of the array.
        */
@@ -333,11 +340,19 @@ class JeopardyGame {
     });
 
     /**
+     * Add event listener to exit button to exit the game.
+     */
+    exitBtn.addEventListener('click', () => {
+      document.body.innerHTML = '';
+      this.welcomePage();
+    });
+
+    /**
      * Append all elements to the body.
      */
-
     buttonGroup.appendChild(finishedBtn);
     buttonGroup.appendChild(resetBtn);
+    buttonGroup.appendChild(exitBtn);
     playerTable.appendChild(buttonGroup);
 
     /**
@@ -556,6 +571,13 @@ function createInput(inputType, attName) {
   input.setAttribute('id', attName);
   input.setAttribute('name', attName);
   return input;
+}
+
+function createIconElement(iconName) {
+  let svgIcon = document.createElement('img');
+  svgIcon.setAttribute('src', `./assets/icons/${iconName}.svg`);
+  svgIcon.setAttribute('class', 'icon');
+  return svgIcon;
 }
 
 function saveJsonToCookie(name, json, daysToExpire) {
