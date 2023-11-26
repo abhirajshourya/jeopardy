@@ -197,7 +197,7 @@ class JeopardyGame {
       /**
        * Set player name and score.
        */
-      playerNameInput.setAttribute('placeholder', `Player ${index + 1}`);
+      playerNameInput.setAttribute('placeholder', `Enter Name`);
       playerNameInput.setAttribute('class', 'player__name__input');
       playerNameInput.addEventListener('change', () => {
         score[index].playerName =
@@ -439,6 +439,11 @@ class JeopardyGame {
     return this.score[indexOfWinner];
   }
 
+  /**
+   * This function create a modal to display top players in Jeopardy
+   * @param {object} winners list of top winners
+   * @returns a modal that show list of top players
+   */
   showWinnerHistoryBoard(winners) {
     let winnerHistoryModal = createElement('div', 'winner__history');
     let winnerHistoryContent = createElement('div', 'winner__history__content');
