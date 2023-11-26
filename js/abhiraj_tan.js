@@ -671,7 +671,7 @@ function readJsonFromCookie(name) {
 function addCreatorInfo() {
   let creatorInfo = createElement('div', 'creator__info');
   let creatorInfoHeading = createElement('h2', 'creator__info__heading');
-  creatorInfoHeading.innerHTML = `Created by <a href="https://www.github.com/in/abhirajshourya/">Abhiraj Shourya</a> & <a href="https://github.com/lenhuttanprograming">Nhut Tan Le</a>`;
+  creatorInfoHeading.innerHTML = `Created by <a href="https://www.github.com/abhirajshourya/">Abhiraj Shourya</a> & <a href="https://github.com/lenhuttanprograming">Nhut Tan Le</a>`;
   creatorInfo.appendChild(creatorInfoHeading);
   document.body.appendChild(creatorInfo);
 }
