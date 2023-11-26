@@ -26,8 +26,8 @@ class JeopardyGame {
     this.categories = [];
     this.clues = {};
     this.score = [];
-    if (readJsonFromCookie('winners') != null) {
-      this.winners = readJsonFromCookie('winners');
+    if (readJsonFromCookie('high_scores') != null) {
+      this.winners = readJsonFromCookie('high_scores');
     } else {
       this.winners = [];
     }
@@ -294,10 +294,10 @@ class JeopardyGame {
       let date = new Date();
       let winPlayer = {
         ...this.checkWinner(),
-        time: `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`,
+        time: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
       };
 
-      this.winners.push(winPlayer);
+      if (winPlayer.score > 0) this.winners.push(winPlayer);
 
       /**
        * Sort the winners array by score. The winner is the first element of the array.
@@ -339,8 +339,7 @@ class JeopardyGame {
       checkLeaderBoardBtn.addEventListener('click', () => {
         let historyModal = this.showWinnerHistoryBoard(readJsonFromCookie('high_scores'));
         board.appendChild(historyModal);
-      })
-
+      });
 
       winnerModalContent.innerHTML = `<p>The winner is <span>${winPlayer.playerName}</span> with <span>$${winPlayer.score}</span></p>`;
       winnerModalContent.addEventListener('click', (e) => {
@@ -434,29 +433,34 @@ class JeopardyGame {
     let winnerHistoryModal = createElement('div', 'winner__history');
     let winnerHistoryContent = createElement('div', 'winner__history__content');
 
-    let winnerHistoryHeading =  createElement('h2', 'winner__history__heading');
+    let winnerHistoryHeading = createElement('h2', 'winner__history__heading');
     winnerHistoryHeading.innerHTML = 'Top Players in Jeopardy';
     let winnerList = createElement('ul', 'winner___list');
     let index = 1;
-    winners.forEach(winner => {
+    let winnerListHeader = createElement('p', 'winner__list__header');
+    winnerListHeader.innerHTML = `<span>Player</span> <span>Score</span> <span>Time</span>`;
+
+    winners.forEach((winner) => {
       let winnerItem = createElement('li', 'winner__item');
-      winnerItem.innerHTML = `${index}. ${winner.playerName}, ${winner.score} <span>${winner.time}</span>`;
+      winnerItem.innerHTML = `<p><span>${index}. ${winner.playerName}</span> <span>$${winner.score}</span> <span>${winner.time}</span></p>`;
       winnerList.appendChild(winnerItem);
       index++;
     });
 
     let winnerHistoryClose = createElement('a', 'close');
-    winnerHistoryClose.innerHTML = 'Close';
+    let winnerHistoryCloseIcon = createIconElement('close');
+    winnerHistoryClose.innerHTML = winnerHistoryCloseIcon.outerHTML;
 
     winnerHistoryContent.appendChild(winnerHistoryHeading);
+    winnerHistoryContent.appendChild(winnerListHeader);
     winnerHistoryContent.appendChild(winnerList);
     winnerHistoryContent.appendChild(winnerHistoryClose);
     winnerHistoryModal.appendChild(winnerHistoryContent);
 
     winnerHistoryClose.addEventListener('click', () => {
       winnerHistoryModal.remove();
-    })
-    
+    });
+
     return winnerHistoryModal;
   }
 
@@ -568,7 +572,7 @@ class JeopardyQuestion {
     question.innerHTML = this.question;
     answer.innerHTML = this.answer;
     answerBtn.innerHTML = 'Show Answer';
-    cancelBtn.innerHTML = 'Exit Question';
+    cancelBtn.innerHTML = createIconElement('close').outerHTML;
 
     modalQuestions.appendChild(modalHeader);
     modalQuestions.appendChild(question);
