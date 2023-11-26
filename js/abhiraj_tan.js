@@ -312,6 +312,13 @@ class JeopardyGame {
       });
 
       /**
+       * Limit the winners array to 10 elements.
+       */
+      if (this.winners.length > 10) {
+        this.winners = this.winners.slice(0, 10);
+      }
+
+      /**
        * Save the winners array to the cookie.
        */
       saveJsonToCookie('high_scores', this.winners, 90);
